@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unitrade Registration</title>
+    <link rel="stylesheet" href="loginstyle.css" />
+  </head>
+  <body>
+    <div class="main-container">
+      <!-- <div class="image-section">
+        <img src="gpt.png" alt="Vendor with a cart" />
+      </div> -->
+      <div class="form-section">
+        <div class="container">
+          <div class="form-container active" id="register-form">
+            <h2>Registration</h2>
+            <form id="form" onsubmit="handleSubmit">
+              <input id="fname" type="text" placeholder="First Name" required />
+              <input id="lname" type="text" placeholder="Last Name" required />
+              <input
+                id="email"
+                type="email"
+                placeholder="Nile University Email"
+                required
+              />
+              <p style="color: red; font-size: 12px" id="email_error"></p>
+              <small style="color: gray; font-size: 12px"
+                >Must be @nileuniversity.edu.ng</small
+              >
+              <input id="tel" type="tel" placeholder="Phone Number" required />
+              <input
+                id="password"
+                type="password"
+                placeholder="Password"
+                required
+              />
+              <input
+                id="cpassword"
+                type="password"
+                placeholder="Confirm Password"
+                required
+              />
+              <button type="submit">Register</button>
+              <p>Already have an account? <a href="index.html">Login</a></p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="./register.js"></script>
+  </body>
+</html>
