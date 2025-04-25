@@ -4,6 +4,8 @@ import { dirname } from "path";
 import { fileURLToPath } from "url";
 import pg from "pg";
 import * as argon2 from "argon2";
+import multer from "multer";
+import path from "path";
 
 const db = new pg.Client({
   user: "postgres",
@@ -16,6 +18,21 @@ const db = new pg.Client({
 db.connect();
 
 const app = express();
+// Configure multer to save images to a folder (e.g., /uploads)
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "uploads/"); // make sure this folder exists
+  },
+  filename: function (req, file, cb) {
+    const ext = path.extname(file.originalname);
+    const uniqueName = Date.now() + "-" + Math.round(Math.random() * 1e9) + ext;
+    cb(null, uniqueName); // e.g. 1682450189221-123456789.jpg
+  },
+});
+
+const upload = multer({ storage: storage });
+//const upload = multer({ dest: "uploads/" }); // Set the destination for uploaded files
+
 // app.use(express.json());
 const port = 3000;
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -56,7 +73,6 @@ app.post("/login", async (req, res) => {
     `SELECT * FROM  user_data1 WHERE email='${email}' LIMIT 1` //Searches the databse for the email, to be able to tap into the password
   );
 
-  console.log(userInfo);
   if (userInfo.rowCount == 0) {
     return res.status(404).json({ message: "Invalid Email/Password" });
   }
@@ -94,6 +110,39 @@ app.delete("/delete-user", async (req, res) => {
     res.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Error deleting user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+// Update the database with the timestamp when the form was sent
+app.post("/quiksell_upload", upload.single("image"), async (req, res) => {
+  const { pName, description, price, userName, email, phoneNumber } = req.body;
+  const timestamp = new Date(); // Get the current timestamp
+  console.log(req.file);
+
+  if (!pName || !description || !price || !email) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  const image = req.file.path;
+  try {
+    await db.query(
+      "INSERT INTO quiksell (name, description, price, image, user_name, email, phonenumber, createdat) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      [
+        pName,
+        description,
+        price,
+        image,
+        userName,
+        email,
+        phoneNumber,
+        timestamp,
+      ]
+    );
+
+    res.json({ message: "Product uploaded successfully" });
+  } catch (error) {
+    console.error("Error uploading product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendor Section</title>
+    <link rel="stylesheet" href="quiksell_upload.css" />
+  </head>
+  <body>
+    <header>
+      <img
+        src="whitespace_logo.png"
+        alt="Student Marketplace Logo"
+        class="logo"
+      />
+    </header>
+
+    <!-- Vendor Dashboard
+    <section class="vendor-dashboard">
+      <h1>Quiksell Upload</h1>
+      <div class="dashboard-card">
+        <h2>Product Listings</h2>
+        <table id="product-table">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Product Name</th>
+              <th>Description</th>
+              <th>Price (₦)</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            Rows will be added dynamically -->
+    <!-- </tbody>
+        </table>
+      </div>
+    </section> -->
+
+    <!-- Product Listing Form -->
+    <section class="product-listing">
+      <h1>Add/Edit Product</h1>
+      <form id="product-form" enctype="multipart/form-data">
+        <label for="product-name">Product Name:</label>
+        <input type="text" id="product-name" required />
+
+        <label for="description">Description:</label>
+        <textarea
+          id="description"
+          type="description"
+          rows="4"
+          required
+        ></textarea>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" name="price" required />
+
+        <label for="image">Upload Image:</label>
+        <input type="file" id="image" name="image" accept="image/*" />
+
+        <!-- <div id="image-preview"></div> -->
+
+        <button type="submit" id="submit-btn">Add Listing</button>
+        <button type="button" id="cancel-edit" style="display: none">
+          Cancel Edit
+        </button>
+      </form>
+      <p id="product-message"></p>
+    </section>
+
+    <script src="another.js"></script>
+  </body>
+</html>
