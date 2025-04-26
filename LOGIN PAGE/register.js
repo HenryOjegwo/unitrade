@@ -1,7 +1,7 @@
-const passwordregex =
-  "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
+// const passwordregex =
+//   "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$";
 
-// Looking and getting to hold the input fields
+// Looking and getting to hold the input fields from the form on register/html
 const firstName = document.getElementById("fname");
 const lastName = document.getElementById("lname");
 const email = document.getElementById("email");
@@ -10,19 +10,9 @@ const password = document.getElementById("password");
 const cPassword = document.getElementById("cpassword");
 const emailError = document.getElementById("email_error");
 
-email.addEventListener("focusout", (ev) => {
-  if (ev.target.value.split("@")[1].toLowerCase() != "nileuniversity.edu.ng") {
-    emailError.innerHTML = "Invalid domain";
-  }
-});
-
-email.addEventListener("focus", (ev) => {
-  emailError.innerHTML = "";
-});
-
 //Submiting the from through ajax and getting the values of the form
 const handleSubmit = async (ev) => {
-  ev.preventDefault(); //Prevent defaukt browser behaviour with respect to form handling
+  ev.preventDefault(); //Prevent the form from submitting before being submitted by the user
   const payload = {
     firstName: firstName.value,
     lastName: lastName.value,
@@ -37,6 +27,20 @@ const handleSubmit = async (ev) => {
     return;
   }
 
+  //Does not shoot out an error till the user is done typing the domain name
+  email.addEventListener("focusout", (ev) => {
+    if (
+      ev.target.value.split("@")[1].toLowerCase() != "nileuniversity.edu.ng"
+    ) {
+      emailError.innerHTML = "Invalid domain";
+    }
+  });
+
+  email.addEventListener("focus", (ev) => {
+    emailError.innerHTML = "";
+  });
+
+  //Make sure the phone number is 11 digits
   if (tel.value.length > 11 || tel.value.length < 11) {
     alert("Wrong Phone Number");
     return;
@@ -48,7 +52,7 @@ const handleSubmit = async (ev) => {
     return;
   }
 
-  //This submits the data to the /register endpoint on the server
+  //This submits the data to the /register endpoint on the server using json
   const response = await fetch("/register", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -63,7 +67,6 @@ const handleSubmit = async (ev) => {
   alert(data.message);
 };
 
-//Tapping into when the user submits the form so Submi is an event
-//Handlsubmit runs when submit event is fired
+//When the user presses submit the handleSubmit function is triggered
 const form = document.getElementById("form");
 form.addEventListener("submit", handleSubmit);
