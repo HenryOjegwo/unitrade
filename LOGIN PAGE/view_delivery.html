@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Request Delivery</title>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #f5f7fa;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Available Delivery Helpers</h1>
+
+      <div class="filter-controls">
+        <label>Pick Up</label>
+        <select id="location-filter-pickup">
+          <option value="">All Locations</option>
+          <option value="girls-hostel">Girls Hostel</option>
+          <option value="boys-hostel">Boys Hostel</option>
+          <option value="library">Library</option>
+          <option value="cafeteria">Cafeteria</option>
+        </select>
+
+        <label>Drop Off</label>
+        <select id="location-filter-delivery">
+          <option value="">All Locations</option>
+          <option value="girls-hostel">Girls Hostel</option>
+          <option value="boys-hostel">Boys Hostel</option>
+          <option value="library">Library</option>
+          <option value="cafeteria">Cafeteria</option>
+        </select>
+
+        <button id="filter-button">Filter</button>
+      </div>
+
+      <div id="delivery-helpers-container">
+        <!-- Helpers will appear here -->
+      </div>
+    </div>
+    <script src="view_delivery.js"></script>
+  </body>
+</html>

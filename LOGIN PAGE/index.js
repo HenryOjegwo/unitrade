@@ -178,7 +178,7 @@ app.get("/get-products", async (req, res) => {
   }
 });
 
-//DELIVERY MODULE
+//DELIVERY MODULE - AKITOYE
 // This endpoint is called when the delivery button is clicked
 app.post("/delivery_upload", async (req, res) => {
   const {
@@ -201,6 +201,7 @@ app.post("/delivery_upload", async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
+  //Inserrs the data into the database
   try {
     await db.query(
       "INSERT INTO delivery (deliveryname, deliverymail, deliverytel, leavingfrom, gettingto, timeavailable) VALUES ($1, $2, $3, $4, $5, $6)",
@@ -221,13 +222,13 @@ app.post("/delivery_upload", async (req, res) => {
   }
 });
 
-// Updated endpoint to fetch valid delivery helpers based on time constraints
+// Updated endpoint to fetch delivery helpers, including those expired within the last 10 minutes
 app.get("/get-deliveries", async (req, res) => {
   try {
     const result = await db.query(
       `SELECT *, (deliverycreate + (timeavailable || ' minutes')::interval) AS expiry_time 
        FROM delivery 
-       WHERE (deliverycreate + (timeavailable || ' minutes')::interval) > NOW()`
+       WHERE (deliverycreate + (timeavailable || ' minutes')::interval) > NOW() - INTERVAL '10 minutes'`
     );
     res.json(result.rows);
   } catch (error) {
@@ -235,6 +236,7 @@ app.get("/get-deliveries", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
+// END OF DELIVERY MODULE
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);
