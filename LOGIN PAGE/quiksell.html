@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content ="width=device-width, initial-scale=1">
         <title>Unitrade website</title>
-        <link rel="stylesheet" type="text/css" href="quiksell.css">
+        <link rel="stylesheet" type="text/css" href="try.css">
 
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,22 +16,27 @@
 
         <!---header section design--->
         <header>
-            <a href="#" class="logo"><img src="C:\Users\hp\Downloads\White_Modern_Oneron_Fashion_Brand_Art_Design_Logo-removebg-preview.png"></a>
+            <a href="#" class="logo"><img src="whitespace_logo.png"></a>
 
             <ul class="navbar">
                 <li><a href="../LANDING PAGE/index.html" class="active">Home</a></li>
+                <li><a href="#">Shop</a></li>
                 <li><a href="#">Delivery</a></li>
-                <li><a href="../Shop/index.html">Shop</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="../QUICKSELL/index.html">Quicksell</a></li>
+                <li><a href="quiksell.html">Quiksell</a></li>
             </ul>
 
             <div class="icons">
-                <a href="#"><i class="ri-search-line"></i></a>
                 <a href="profile.html"><i class="ri-user-line"></i></a>
-                <a href="#"><i class="ri-shopping-cart-line"></i></a>
+                <a  href="#"><i class="ri-shopping-cart-line"></i> <span id="wishlist"></span></a>
                 <div class="bx bx-menu" id="menu-icon"></div>
-                <a href="#"><i class="ri-menu-2-line"></i>
+                <a href="#" class="dropdown-icon" id="dropdown-icon"><i class="ri-menu-2-line"></i>
+            </div>
+
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="#">Home</a>
+                <a href="#">Shop</a>
+                <a href="#">Delivery</a>
+                <a href="quiksell.html">QuikSell</a>
             </div>
         </header>
         
@@ -43,113 +48,19 @@
                 <h1>Limited for 24 hours only</h1>
                 <a href="quiksell_upload.html" class="btn">Upload now</a>
             </div>
-
-            <div class="home-img">
-                <img src="C:\Users\hp\Downloads\hero-right-2.png">
-            </div>
         </section>
 
-        <!---product section design--->
+        <!--- This is where the products from the databse are looped through--->
         <section class="product">
             <div class="middle-text">
                 <h2>Fresh Deals <span>Buy TODAY</span></h2>
             </div>
 
-            <div class="product-content">
-                <div class="box">
-                    <div class="box-img">
-                        <img src="C:\Users\hp\Downloads\White Modern Oneron Fashion Brand Art Design Logo.png">
-                    </div>
-                    <h3>Yet to be uploaded</h3>
-                    <h4>Backend will soon be in progress</h4>
-                    <div>
-                        <a href="#" class="price">Price</a>
-                    </div>
-                   
-                <div class="heart">
-                    <i class="ri-heart-fill"></i>
-                </div>
-            
-                    <!-- <div class="rating">
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                    </div> -->
-                </div>
-
-                <div class="box">
-                    <div class="box-img">
-                        <img src="C:\Users\hp\Downloads\White Modern Oneron Fashion Brand Art Design Logo.png">
-                    </div>
-                    <h3>Yet to be uploaded</h3>
-                    <h4>Backend will soon be in progress</h4>
-                    <div>
-                        <a href="#" class="price">Price</a>
-                    </div>
-                    
-                <div class="heart">
-                    <i class="ri-heart-fill"></i>
-                </div>
-
-                    <div class="rating">
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="box-img">
-                        <img src="C:\Users\hp\Downloads\White Modern Oneron Fashion Brand Art Design Logo.png">
-                    </div>
-                    <h3>Yet to be uploaded</h3>
-                    <h4>Backend will soon be in progress</h4>
-                    <div>
-                        <a href="#" class="price">Price</a>
-                    </div>
-                    
-                <div class="heart">
-                    <i class="ri-heart-fill"></i>
-               </div>
-
-                    <div class="rating">
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                    </div>
-                </div>
-
-                <div class="box">
-                    <div class="box-img">
-                        <img src="C:\Users\hp\Downloads\White Modern Oneron Fashion Brand Art Design Logo.png">
-                    </div>
-                    <h3>Yet to be uploaded</h3>
-                    <h4>Backend will soon be in progress</h4>
-                    <div>
-                        <a href="#" class="price">Price</a>
-                    </div>
-
-                <div class="heart">
-                    <i class="ri-heart-fill"></i>
-                </div>
-                
-                    <div class="rating">
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                        <a href = "#"><i class="ri-star-fill"></i></a>
-                    </div>
-                </div>
-                
+            <div class="product-content" id="product-list">
+                <!-- Product items will be dynamically inserted here -->
             </div>
         </section>
+
           <!---contact section design--->
           <section class="contact">
             <div class="main-contact">
@@ -193,7 +104,7 @@
         </div>
 
         <!---custom js link--->
-        <script type="text/javascript" src="script.js"></script>
+        <script type="text/javascript" src="quiksell.js"></script>
 
     </body>
 </html>
