@@ -22,8 +22,8 @@
                 <li><a href="landing.html" >Home</a></li>
                 <li><a href="#">About</a></li>
                 <li><a href="#">Shop</a></li>
-                <li><a href="#">Contact</a></li>
-                <li><a href="#">Quicksell</a></li>
+                <li><a href="view_delivery.html">Delivery</a></li>
+                <li><a href="quiksell.html">Quicksell</a></li>
             </ul>
 
             <div class="icons">
@@ -37,25 +37,92 @@
 
         <!---home section design--->
         <section class="home">
-            <divc class="home-text">
+            <div class="home-text">
                 <h4>USER PROFILE </h4>
                 <h3 >FIRST NAME <span id="firstName"></span></h3>
                 <h3 >LAST NAME <span id="lastName"></span></h3>
                 <h3>STUDENT/STAFF ID <span id="email"></span></h3>
                 <h3>TEL NO: <span id="tel"></span></h3>
 
-                <button id="logout"  type="button" class="btn">Log Out</button>
-            </divc>
+                <button id="editprofile"  type="button" class="btn">Edit Profile</button>
+                <button id="deliveryuploads"  type="button" class="btn">My Delivery</button>
+                <button id="quikselluploads"  type="button" class="btn">My Quiksell</button>
+
+                
+            </div>
 
             <div class="home-img">
                 <img src="profileimage.png">
             </div>
         </section>
+        
+        <!-- This is the edit profile modal -->
+        <div id="editProfileModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Edit Profile</h2>
+                <form id="editProfileForm">
+                    <label>First Name:</label><br/>
+                    <input type="text" id="newFirstName" name="name"><br/><br/>
+                    
+                    <label>Last Name</label><br/>
+                    <input type="text" id="newLastName" name="name"><br/><br/>
+
+                    <label>Number</label><br/>
+                    <input type="tel" id="newTelNo" name="telNum"><br/><br/>
+                    
+                    <button type="submit" id="submitBtn">Save</button>
+                    <button type="button" id="closeModalBtn">Cancel</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- This is the delivery uploads modal -->
+        <div id="deliveryUploadsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>My Delivery</h2>
+                <p>Here you can view your delivery uploads.</p>
+                <div id="deliveryUploadsList"></div>
+                <!-- <button type="button" id="addDeliveryBtn">Add Delivery</button>
+                <button type="button" id="editDeliveryBtn">Edit Delivery</button>
+                <button type="button" id="deleteDeliveryBtn">Delete Delivery</button> -->
+                <button type="button" id="closeDeliveryModalBtn">Close</button>
+                <button type="button" id="addDeliveryBtn">Add Delivery</button>
+            </div>
+        </div>
+
+        <div id="quiksellUploadsModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>My Quiksell</h2>
+                <p>Here you can view your quiksell uploads.</p>
+                <div id="quiksellUploadsList"></div>
+                <!-- <button type="button" id="addQuiksellBtn">Add Quiksell</button>
+                <button type="button" id="editQuiksellBtn">Edit Quiksell</button>
+                <button type="button" id="deleteQuiksellBtn">Delete Quiksell</button> -->
+                <button type="button" id="closeQuiksellModalBtn">Close</button>
+            </div>
+        </div>
+
+        <div id="changePassword" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Edit Profile</h2>
+                <form id="editProfileForm">
+                    <label>Input Password: </label><br/>
+                    <input type="password" id="newPassword"><br/><br/>
+                    
+                    <label>Confirm Passsword: </label><br/>
+                    <input type="password" id="cNewPassword"><br/><br/>
+                    
+                    <button type="submit" id="submitPasswordBtn">Save</button>
+                    <button type="button" id="closePasswordModalBtn">Cancel</button>
+                </form>
+            </div>
+        </div>
+        
+        
+        
         <section>
-        <!-- <a href="#" class="btn">Upload Image</a>
-
-
-        <a href="#" class="btn">Close Account</a> -->
+        <button id="updatePasswordBtn"  type="button" class="btn">Change Password</button>
+        <button id="logout"  type="button" class="btn">Log Out</button>
         <button id="close"  type="button" class="btn">Close Account</button>
         </section>
         <script src="profile.js"></script>

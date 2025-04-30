@@ -8,7 +8,20 @@ const email = document.getElementById("email");
 const tel = document.getElementById("tel");
 const password = document.getElementById("password");
 const cPassword = document.getElementById("cpassword");
-const emailError = document.getElementById("email_error");
+const emailError = document.getElementById("email-error");
+
+console.log("emailError", emailError);
+
+//Does not shoot out an error till the user is done typing the domain name
+email.addEventListener("focusout", (ev) => {
+  if (ev.target.value.split("@")[1].toLowerCase() != "nileuniversity.edu.ng") {
+    emailError.innerHTML = "Invalid domain";
+  }
+});
+
+email.addEventListener("focus", (ev) => {
+  emailError.innerHTML = "";
+});
 
 //Submiting the from through ajax and getting the values of the form
 const handleSubmit = async (ev) => {
@@ -27,21 +40,8 @@ const handleSubmit = async (ev) => {
     return;
   }
 
-  //Does not shoot out an error till the user is done typing the domain name
-  email.addEventListener("focusout", (ev) => {
-    if (
-      ev.target.value.split("@")[1].toLowerCase() != "nileuniversity.edu.ng"
-    ) {
-      emailError.innerHTML = "Invalid domain";
-    }
-  });
-
-  email.addEventListener("focus", (ev) => {
-    emailError.innerHTML = "";
-  });
-
   //Make sure the phone number is 11 digits
-  if (tel.value.length > 11 || tel.value.length < 11) {
+  if (tel.value.length !== 11) {
     alert("Wrong Phone Number");
     return;
   }
@@ -66,6 +66,11 @@ const handleSubmit = async (ev) => {
   }
   alert(data.message);
 };
+
+// Restrict input to numbers only for the phone number field
+tel.addEventListener("input", (event) => {
+  event.target.value = event.target.value.replace(/[^0-9]/g, "");
+});
 
 //When the user presses submit the handleSubmit function is triggered
 const form = document.getElementById("form");

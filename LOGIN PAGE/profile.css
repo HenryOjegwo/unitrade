@@ -293,3 +293,369 @@ span {
   justify-content: space-between;
   gap: 2rem;
 }
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header {
+    padding: 14px 5%;
+  }
+
+  .home {
+    grid-template-columns: 1fr;
+    padding: 0 5%;
+  }
+
+  .home-text h1 {
+    font-size: 28px;
+  }
+
+  .home-text h3 {
+    font-size: 22px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  header {
+    padding: 14px 2%;
+  }
+
+  .home-text h1 {
+    font-size: 24px;
+  }
+
+  .home-text h3 {
+    font-size: 20px;
+  }
+
+  .btn {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 1700px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+  .home {
+    gap: 1rem;
+  }
+}
+@media (max-width: 1200px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 992px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 768px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 576px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 480px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 360px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 320px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 280px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 240px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 200px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 160px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 140px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 120px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 100px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+
+@media (max-width: 80px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 60px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 50px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 40px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 30px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 20px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 10px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 5px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 1px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+
+/* Modal Test Css */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.delivery-card {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+.quiksell-card {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}

@@ -18,7 +18,6 @@ const db = new pg.Client({
 });
 
 db.connect();
-// app.use(express.json());
 
 const app = express();
 const port = 3000;
@@ -30,27 +29,40 @@ app.use(express.static(__dirname));
 
 //Customer - LATOYA
 //Post request (endpoint) to be done when login button is pressed
+
+const adminEmail = "admin@nileuniversity.edu.ng";
+const adminPassword = "unitrade";
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  const userInfo = await db.query(
-    `SELECT * FROM  user_data1 WHERE email='${email}' LIMIT 1`
-    //Searches the databse for the email, to be able to tap into the password
-  );
 
-  if (userInfo.rowCount == 0) {
-    return res.status(404).json({ message: "Invalid Email/Password" });
-  }
+  if (email === adminEmail && password === adminPassword) {
+    // If the user is an admin, send them to the admin page
+    return res.sendFile(__dirname + "/Admin/admin_landing.html");
+  } else {
+    //If the email and password are not the same as the admin, it will search for the user in the database
 
-  //Since the password is hashed it uses the argon to unhash it and compare with user input
-  const user = userInfo.rows[0];
-  const ispasswordMatch = await argon2.verify(user.password, password);
-  if (!ispasswordMatch) {
-    return res.status(404).json({ message: "Invalid Password" });
+    const userInfo = await db.query(
+      `SELECT * FROM  user_data1 WHERE email='${email}' LIMIT 1`
+      //Searches the databse for the email, to be able to tap into the password
+    );
+
+    if (userInfo.rowCount == 0) {
+      return res.status(404).json({ message: "Invalid Email/Password" });
+    }
+
+    //Since the password is hashed it uses the argon to unhash it and compare with user input
+    const user = userInfo.rows[0];
+    const ispasswordMatch = await argon2.verify(user.password, password);
+    if (!ispasswordMatch) {
+      return res.status(404).json({ message: "Invalid Password" });
+    }
+    //returns the cookie (which is current user data) because we need to upload profile data
+    res
+      .cookie("user", JSON.stringify(structuredClone(user)), {
+        httpOnly: false,
+      })
+      .sendFile(__dirname + "/landing.html");
   }
-  //returns the cookie (which is current user data) because we need to upload profile data
-  res
-    .cookie("user", JSON.stringify(structuredClone(user)), { httpOnly: false })
-    .sendFile(__dirname + "/landing.html");
 });
 
 //endpoint to display login page when the page is loaded
@@ -85,6 +97,84 @@ async function register(req, res, next) {
 
 //This posts the info in the register function when the register button is clicked
 app.post("/register", register, (req, res) => {});
+
+//This endpoint is called when the user wants to update their profile
+app.put("/update-user", async (req, res) => {
+  console.log("Update user endpoint called");
+  const { fname, lname, tel, email } = req.body;
+
+  if (!email) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  if (!fname || !lname || !tel) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    await db.query(
+      "UPDATE user_data1 SET fname = $1, lname = $2, tel = $3 WHERE email = $4",
+      [fname, lname, tel, email]
+    );
+
+    // Return the updated user data after a successful update
+    const updatedUser = await db.query(
+      "SELECT fname, lname, tel, email FROM user_data1 WHERE email = $1",
+      [email]
+    );
+
+    if (updatedUser.rowCount > 0) {
+      res.json(updatedUser.rows[0]); // Return the updated user data
+    } else {
+      res.status(404).json({ message: "User not found after update." });
+    }
+  } catch (error) {
+    console.error("Error updating user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//Endpoint is to update the password
+app.put("/update-password", async (req, res) => {
+  const { email, oldPassword, newPassword } = req.body;
+
+  if (!email || !oldPassword || !newPassword) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+
+  try {
+    // Check if the user exists
+    const userInfo = await db.query(
+      `SELECT * FROM user_data1 WHERE email = $1`,
+      [email]
+    );
+
+    if (userInfo.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    const isOldPasswordMatch = await argon2.verify(oldPassword, newPassword);
+    if (isOldPasswordMatch) {
+      return res
+        .status(401)
+        .json({ message: "New Password and old Password can not be the same" });
+    }
+
+    // Hash the new password and update it in the database
+    const hashedNewPassword = await argon2.hash(newPassword);
+    await db.query("UPDATE user_data1 SET password = $1 WHERE email = $2", [
+      hashedNewPassword,
+      email,
+    ]);
+    console.log("Password");
+    res.json({
+      message: "Password updated successfully. You will be logged out",
+    });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 // This endpoint deletes user data when it is called from the profile.js
 app.delete("/delete-user", async (req, res) => {
@@ -166,14 +256,136 @@ app.post("/quiksell_upload", upload.single("image"), async (req, res) => {
 });
 
 // This is an endpoint that only gets products that have been on the database for less than 24 hours.
-app.get("/get-products", async (req, res) => {
+app.post("/get-products", async (req, res) => {
   try {
     const result = await db.query(
       `SELECT * FROM quiksell WHERE createdat >= NOW() - INTERVAL '24 HOURS'`
     );
+    const wishList = await db.query(
+      `SELECT * FROM wishlist WHERE userid = $1`,
+      [req.body.userId]
+    );
+    result.rows.forEach((product) => {
+      const isInWishlist = wishList.rows.some(
+        (item) => item.productid === product.id
+      );
+      product.isInWishlist = isInWishlist;
+    });
     res.json(result.rows);
   } catch (error) {
     console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/toggle-wishlist", async (req, res) => {
+  const { userId, productId } = req.body;
+  console.log("Toggle wishlist endpoint called");
+  console.log(userId, productId);
+
+  if (!userId || !productId) {
+    return res
+      .status(400)
+      .json({ message: "User ID and Product ID are required" });
+  }
+
+  try {
+    // Check if the product is already in the wishlist
+    const existingProduct = await db.query(
+      "SELECT * FROM wishlist WHERE userid = $1 AND productid = $2",
+      [userId, productId]
+    );
+
+    if (existingProduct.rowCount > 0) {
+      // If it exists, remove it from the wishlist
+      await db.query(
+        "DELETE FROM wishlist WHERE userid = $1 AND productid = $2",
+        [userId, productId]
+      );
+      res.json({ message: "Product removed from wishlist" });
+    } else {
+      // If it doesn't exist, add it to the wishlist
+      await db.query(
+        "INSERT INTO wishlist (userid, productid) VALUES ($1, $2)",
+        [userId, productId]
+      );
+      res.json({ message: "Product added to wishlist" });
+    }
+  } catch (error) {
+    console.error("Error toggling wishlist:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/get_wishlist", async (req, res) => {
+  const { userId } = req.body;
+  if (!userId) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    // Updated query to exclude expired products (uploaded more than 24 hours ago)
+    const userWishlist = await db.query(
+      `SELECT * FROM wishlist 
+       WHERE userid = $1 
+       AND productid IN (
+         SELECT id FROM quiksell WHERE createdat >= NOW() - INTERVAL '24 HOURS'
+       )`,
+      [userId]
+    );
+    const products = await db.query(
+      `SELECT * FROM quiksell WHERE id = ANY($1::int[])`,
+      [userWishlist.rows.map((item) => item.productid)]
+    );
+    res.json(
+      products.rows.map((product) => {
+        const isInWishlist = userWishlist.rows.some(
+          (item) => item.productid === product.id
+        );
+        return { ...product, isInWishlist };
+      })
+    );
+  } catch (error) {
+    console.error("Error fetching wishlist:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.post("/my-quiksell", async (req, res) => {
+  const { email } = req.body; // Use req.body to get the email
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const products = await db.query(
+      `SELECT * FROM quiksell 
+       WHERE email = $1 
+       AND createdat >= NOW() - INTERVAL '24 HOURS'`,
+      [email]
+    );
+    res.json(products.rows);
+  } catch (error) {
+    console.error("Error fetching products:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.delete("/delete-quiksell", async (req, res) => {
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ message: "ID is required" });
+  }
+
+  try {
+    const result = await db.query("DELETE FROM quiksell WHERE id = $1", [id]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json({ message: "Product deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting product:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -201,7 +413,7 @@ app.post("/delivery_upload", async (req, res) => {
     return res.status(400).json({ message: "All fields are required" });
   }
 
-  //Inserrs the data into the database
+  //Inserts the data into the database
   try {
     await db.query(
       "INSERT INTO delivery (deliveryname, deliverymail, deliverytel, leavingfrom, gettingto, timeavailable) VALUES ($1, $2, $3, $4, $5, $6)",
@@ -236,7 +448,48 @@ app.get("/get-deliveries", async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 });
-// END OF DELIVERY MODULE
+
+// Updated endpoint to handle POST request for fetching deliveries
+app.post("/my-deliveries", async (req, res) => {
+  const { email } = req.body; // Use req.body to get the email
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const deliveries = await db.query(
+      `SELECT * FROM delivery 
+       WHERE deliverymail = $1 
+       AND (deliverycreate + (timeavailable || ' minutes')::interval) > NOW()`,
+      [email]
+    );
+    res.json(deliveries.rows);
+  } catch (error) {
+    console.error("Error fetching deliveries:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.delete("/delete-delivery", async (req, res) => {
+  const { id } = req.body;
+
+  if (!id) {
+    return res.status(400).json({ message: "ID is required" });
+  }
+
+  try {
+    const result = await db.query("DELETE FROM delivery WHERE id = $1", [id]);
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Delivery not found" });
+    }
+
+    res.json({ message: "Delivery deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting delivery:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
 
 app.listen(port, () => {
   console.log("Server is running on port " + port);
