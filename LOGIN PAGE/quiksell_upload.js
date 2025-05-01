@@ -1,13 +1,3 @@
-// Global variables
-let currentEditingRow = null;
-const productForm = document.getElementById("product-form");
-const productTable = document
-  .getElementById("product-table")
-  ?.getElementsByTagName("tbody")[0];
-const productMessage = document.getElementById("product-message");
-const submitBtn = document.getElementById("submit-btn");
-const cancelEditBtn = document.getElementById("cancel-edit");
-
 function getCookie(name) {
   const value = `; ${document.cookie}`;
   const parts = value.split(`; ${name}=`);
@@ -18,188 +8,76 @@ const userString = getCookie("user");
 if (!userString) {
   window.location = "/";
 }
+const user = JSON.parse(decodeURIComponent(userString));
 
-// // Handle image preview
-// document.getElementById("image").addEventListener("change", function (e) {
-//   const preview = document.getElementById("image-preview");
-//   preview.innerHTML = "";
+const productName = document.getElementById("product-name");
+const description = document.getElementById("description");
+const price = document.getElementById("price");
+const image = document.getElementById("image");
 
-//   if (e.target.files[0]) {
-//     const img = document.createElement("img");
-//     img.src = URL.createObjectURL(e.target.files[0]);
-//     img.style.maxHeight = "150px";
-//     preview.appendChild(img);
-//   }
-// });
+const addProduct = async (ev) => {
+  ev.preventDefault();
 
-// Form submission handler
-productForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  alert("Form submitted");
+  const payload = {
+    pName: productName.value,
+    description: description.value,
+    price: price.value,
+    image: image.files[0],
+    userName: user.fname + " " + user.lname,
+    email: user.email,
+    phoneNumber: user.tel,
+  };
 
-  const productName = document.getElementById("product-name").value;
-  const description = document.getElementById("description").value;
-  const price = document.getElementById("price").value;
-  const imageFile = document.getElementById("image").files[0];
+  const formData = new FormData();
+  formData.append("pName", payload.pName);
+  formData.append("description", payload.description);
+  formData.append("price", payload.price);
+  formData.append("image", payload.image);
+  formData.append("userName", payload.userName);
+  formData.append("email", payload.email);
+  formData.append("phoneNumber", payload.phoneNumber);
 
-  const formattedPrice = `₦${parseInt(price).toLocaleString("en-NG")}`;
+  const response = await fetch("/quiksell_upload", {
+    method: "POST",
+    body: formData,
+  });
 
-  if (currentEditingRow) {
-    // Update existing row
-    updateProductRow(
-      currentEditingRow,
-      productName,
-      description,
-      formattedPrice,
-      imageFile
+  const data = await response.json();
+  if (response.ok) {
+    const uploadAnother = confirm(
+      "Product uploaded successfully. Do you want to upload another product?"
     );
-    const response = fetch("/quiksell_upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        pName: productName,
-        description: description,
-        price: price,
-        image: imageFile,
-        userName: user.fname + " " + user.lname,
-        email: user.email,
-        phoneNumber: user.tel,
-      }),
-    });
-    if (response.ok) {
-      console.log("Product updated successfully");
+    if (uploadAnother) {
+      document.getElementById("product-form").reset();
+    } else {
+      window.location = "/profile.html";
     }
-    // Show success message
-    showSuccessMessage("Product updated successfully!");
-    cancelEdit();
-  } else {
-    // Add new row
-    addProductRow(productName, description, formattedPrice, imageFile);
-    showSuccessMessage("Product added successfully!");
+    return;
   }
+  alert(data.message);
+};
 
-  productForm.reset();
-  document.getElementById("image-preview").innerHTML = "";
+//Dropdown functionality
+// Prevent default behavior of dropdown menu click
+const dropdownIcon = document.getElementById("dropdown-icon");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+dropdownIcon.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the page from scrolling to the top
+  dropdownMenu.classList.toggle("show"); // Toggle visibility
 });
 
-// Cancel edit mode
-cancelEditBtn.addEventListener("click", cancelEdit);
-
-function cancelEdit() {
-  currentEditingRow = null;
-  productForm.reset();
-  document.getElementById("image-preview").innerHTML = "";
-  submitBtn.textContent = "Add Listing";
-  cancelEditBtn.style.display = "none";
-}
-
-// Add new product row
-function addProductRow(name, description, price, imageFile) {
-  const row = productTable.insertRow();
-
-  // Image cell
-  const imgCell = row.insertCell(0);
-  if (imageFile) {
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(imageFile);
-    img.style.maxHeight = "50px";
-    imgCell.appendChild(img);
-  } else {
-    imgCell.textContent = "No Image";
+// Optional: Close the dropdown menu if clicked outside
+document.addEventListener("click", (event) => {
+  if (
+    !dropdownIcon.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("show");
   }
-
-  // Other cells
-  row.insertCell(1).textContent = name;
-  row.insertCell(2).textContent = description;
-  row.insertCell(3).textContent = price;
-  row.insertCell(4).textContent = "Available";
-
-  // Actions cell
-  const actionsCell = row.insertCell(5);
-  actionsCell.className = "actions";
-  actionsCell.innerHTML = `
-        <button class="edit-btn">Edit</button>
-        <button class="delete-btn">Delete</button>
-    `;
-
-  // Attach event listeners
-  attachRowEvents(row);
-}
-
-// Update existing product row
-function updateProductRow(row, name, description, price, imageFile) {
-  // Update image if new one was selected
-  if (imageFile) {
-    const imgCell = row.cells[0];
-    imgCell.innerHTML = "";
-    const img = document.createElement("img");
-    img.src = URL.createObjectURL(imageFile);
-    img.style.maxHeight = "50px";
-    imgCell.appendChild(img);
-  }
-
-  // Update other cells
-  row.cells[1].textContent = name;
-  row.cells[2].textContent = description;
-  row.cells[3].textContent = price;
-}
-
-// Attach event listeners to row buttons
-function attachRowEvents(row) {
-  row.querySelector(".delete-btn").addEventListener("click", function () {
-    if (confirm("Are you sure you want to delete this product?")) {
-      row.remove();
-      showSuccessMessage("Product deleted successfully!");
-    }
-  });
-
-  row.querySelector(".edit-btn").addEventListener("click", function () {
-    editProduct(row);
-  });
-}
-
-// Edit product function
-function editProduct(row) {
-  currentEditingRow = row;
-
-  // Populate form with row data
-  document.getElementById("product-name").value = row.cells[1].textContent;
-  document.getElementById("description").value = row.cells[2].textContent;
-  document.getElementById("price").value = row.cells[3].textContent
-    .replace("₦", "")
-    .replace(/,/g, "");
-
-  // Handle image preview
-  const preview = document.getElementById("image-preview");
-  preview.innerHTML = "";
-  const img = row.cells[0].querySelector("img");
-  if (img) {
-    const previewImg = document.createElement("img");
-    previewImg.src = img.src;
-    previewImg.style.maxHeight = "150px";
-    preview.appendChild(previewImg);
-  }
-
-  // Update UI for edit mode
-  submitBtn.textContent = "Update Listing";
-  cancelEditBtn.style.display = "inline-block";
-  productForm.scrollIntoView();
-}
-
-// Show success message
-function showSuccessMessage(message) {
-  productMessage.textContent = message;
-  productMessage.style.color = "green";
-
-  setTimeout(() => {
-    productMessage.textContent = "";
-  }, 3000);
-}
-
-// Initialize existing rows when page loads
-document.addEventListener("DOMContentLoaded", function () {
-  const rows = document.querySelectorAll("#product-table tbody tr");
-  rows.forEach((row) => attachRowEvents(row));
 });
+
+// Ensure only one event listener is attached to the form
+const productForm = document.getElementById("product-form");
+productForm.removeEventListener("submit", addProduct); // Remove any existing listener
+productForm.addEventListener("submit", addProduct);

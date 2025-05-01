@@ -102,6 +102,7 @@ const closeModalBtn = document.getElementById("closeModalBtn");
 closeModalBtn.addEventListener("click", () => {
   const modal = document.getElementById("editProfileModal");
   modal.style.display = "none";
+  document.getElementById("editProfileForm").reset();
 });
 
 // Function to handle form submission to Update the profile
@@ -360,6 +361,94 @@ viewMyDeliveries.addEventListener("click", () => {
   modal.style.display = "block";
   getDeliveryData(); // Fetch and display delivery data when the modal opens
 });
+
+const deliveryForm = document.getElementById("deliveryForm");
+deliveryForm.addEventListener("click", (event) => {
+  const modal = document.getElementById("deliveryFormModal");
+  modal.style.display = "block";
+});
+
+const closeDeliveryFormBtn = document.getElementById("closeFormBtn");
+closeDeliveryFormBtn.addEventListener("click", () => {
+  const modal = document.getElementById("deliveryFormModal");
+  modal.style.display = "none";
+  document.getElementById("uploadForm").reset(); // Reset the form fields
+});
+
+// Restrict input to numbers only
+const clientNumberInput = document.getElementById("clientTelNo");
+clientNumberInput.addEventListener("input", (event) => {
+  event.target.value = event.target.value.replace(/[^0-9]/g, "");
+});
+
+// Restrict input to a maximum of 11 digits
+clientNumberInput.addEventListener("input", (event) => {
+  if (event.target.value.length > 11) {
+    event.target.value = event.target.value.slice(0, 11);
+  }
+});
+
+const logDelivery = async (event) => {
+  event.preventDefault();
+  console.log("I was clicked");
+
+  const clientName = document.getElementById("clientName").value;
+  const clientTel = document.getElementById("clientTelNo").value;
+  const deliveryType = document.getElementById("deliveryType").value;
+  const pickupLocation = document.getElementById("pickupLocation").value;
+  const dropoffLocation = document.getElementById("deliveryLocation").value;
+  const packageDescription =
+    document.getElementById("packageDescription").value;
+
+  // Validate input
+  if (
+    !clientName ||
+    !clientTel ||
+    !deliveryType ||
+    !pickupLocation ||
+    !dropoffLocation ||
+    !packageDescription
+  ) {
+    alert("All fields are required.");
+    return;
+  }
+
+  try {
+    const response = await fetch("/log-delivery", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id, // Use the user ID from the cookie
+        userMail: user.email, // Use the email from the cookie
+        userTel: user.tel, // Use the phone number from the cookie
+        userName: user.fname + " " + user.lname, // Combine first and last name
+        clientName,
+        clientTel,
+        deliveryType,
+        pickupLocation,
+        dropoffLocation,
+        packageDescription,
+      }),
+    });
+
+    if (!response.ok) {
+      throw new Error("Failed to upload delivery");
+    }
+
+    alert("Delivery uploaded successfully.");
+    const modal = document.getElementById("deliveryFormModal");
+    modal.style.display = "none";
+    document.getElementById("uploadForm").reset(); // Reset the form fields
+  } catch (error) {
+    console.error("Error uploading delivery:", error);
+    alert("Failed to upload delivery. Please try again.");
+  }
+};
+
+const logDeliveryBtn = document.getElementById("logButton");
+logDeliveryBtn.addEventListener("click", logDelivery);
 
 //QUIKSELL
 const calculateQuiksellCountdown = (createdAt) => {

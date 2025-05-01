@@ -79,7 +79,9 @@ const getWishList = async () => {
                 </div>
             <img src="${wish.image}" alt="${wish.name}" class="product-image"/>
             <div product-info>
-                <h3 class="product-name">${wish.name}</h3>
+                <h3 class="product-name"><a class="product-name" href="product_description.html?id=${
+                  wish.id
+                }">${wish.name}</a></h3>
                 <p class="price">₦${formattedPrice}</p>
                 <p class="countdown">Time Left: <span class="countdown" data-createdat="${
                   wish.createdat
@@ -103,6 +105,55 @@ setInterval(() => {
     element.innerHTML = countdown;
   });
 }, 1000);
+
+const getDescription = async (pId) => {
+  console.log("Product ID:", pId);
+  const response = await fetch("/get-description", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      productId: pId,
+    }),
+  });
+  const data = await response.json();
+
+  if (!response.ok) {
+    console.error("Error fetching product description:", data);
+    return;
+  }
+  const productDescriptionContainer = document.getElementById("description");
+  productDescriptionContainer.innerHTML = ""; // Clear existing content
+
+  const descriptionCard = document.createElement("div");
+  descriptionCard.classList.add("description-card");
+  console.log(data.description);
+
+  const formattedPrice = Number(data.price).toLocaleString();
+  descriptionCard.innerHTML = `
+
+             <div class="home-image">
+                <img src="${data.image}" alt="${
+    data.name
+  }" class="product-image"/>
+            </div>
+
+            <<div class="home-text">
+                <h4>${data.name}</h4><br>
+                <h4>₦${formattedPrice}</h4><br>
+                <h4>Time Left: <span class="countdown" data-createdat="${
+                  data.createdat
+                }">${calculateCountdown(data.createdat)}</span></h4><br>
+                <h4>PRODUCT DESCRIPTION: ${data.description}</h4><br>
+                <h4>VENDOR NAME: ${data.user_name}</h4><br>
+                <h4>VENDOR NUMBER:${data.phonenumber}</h4><br>
+            </div>
+
+        `;
+  productDescriptionContainer.appendChild(descriptionCard);
+  console.log("Did I get here?");
+};
 
 //This function is called when the heart icon is clicked
 //It sends a post request to the server to toggle the wishlist status of the product

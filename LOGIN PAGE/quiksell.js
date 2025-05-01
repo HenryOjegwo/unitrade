@@ -1,9 +1,26 @@
-// Function to calculate and display countdown for each product
+//This knows user by the cookie address. Using a cookie,
+// the tapping into the cookie properties to acccess different data of the users
 
-// const storageKey = "wish_list";
-// const wishListEl = document.getElementById("wishlist");
-// const wishList = JSON.parse(localStorage.getItem(storageKey)) || [];
-// wishListEl.innerHTML = wishList.length;
+function getCookie(name) {
+  const value = `; ${document.cookie}`;
+  const parts = value.split(`; ${name}=`);
+  if (parts.length === 2) return parts.pop().split(";").shift();
+}
+
+//Since a cookie temporarilyy holds user data, so once the cookie is deleted
+//The temporary user data is deleted, for logging out
+function deleteCookie(name) {
+  document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+}
+
+//This makes sure that if user doesnt have any cookies, profile page can't be accessed
+//It takes ut back to the login page.
+const userString = getCookie("user");
+if (!userString) {
+  window.location = "/";
+}
+const user = JSON.parse(decodeURIComponent(userString));
+console.log(user);
 
 //This is the timer to put on the product card
 const calculateCountdown = (createdAt) => {
@@ -26,27 +43,18 @@ const calculateCountdown = (createdAt) => {
   return `${hours}h ${minutes}m ${seconds}s`;
 };
 
-// Ensure countdown updates every second
-
-// function itemClick(prod) {
-//   console.log("Item clicked", prod);
-//   const product = JSON.parse(atob(prod));
-//   const productId = product.id;
-//   console.log("Item clicked", productId);
-//   const wishList = JSON.parse(localStorage.getItem(storageKey)) || [];
-//   const productIndex = wishList.findIndex((item) => item.id === productId);
-//   if (productIndex === -1) {
-//     const product = { id: productId, createdAt: new Date().toISOString() };
-//     wishList.push(product);
-//     localStorage.setItem(storageKey, JSON.stringify(wishList));
-//     wishListEl.innerHTML = wishList.length;
-//   }
-// }
-
 const fetchProducts = async () => {
   try {
     //This calls the endpoints that filter the databse to only display products  reated less than 24 hours ago
-    const response = await fetch("/get-products"); // Replace with your API endpoint
+    const response = await fetch("/get-products", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userId: user.id,
+      }),
+    });
     if (!response.ok) {
       throw new Error("Failed to fetch products");
     }
@@ -57,47 +65,42 @@ const fetchProducts = async () => {
     // Clear existing content
     productContainer.innerHTML = "";
 
-    // Get the current time
-    const now = new Date().getTime();
-
     // Loop through products and display only valid ones
     products.forEach((product) => {
       const productCard = document.createElement("div");
       productCard.classList.add("product-card");
 
       const countdown = calculateCountdown(product.createdat);
-      //   const formattedProduct = btoa(JSON.stringify(product));
-
-      //   productCard.innerHTML = `
-      //  <button id='${product.id}' class="product-card" onclick="itemClick('${formattedProduct}')">
-      //  <img src="${product.image}" alt="${product.name}" class="product-image" height="100px" width="100px" />
-      // <h3>${product.name}</h3>
-      // <p>${product.description}</p>
-      // <p>Price: ₦${product.price}</p>
-      // <p>Time Left: <span class="countdown">${countdown}</span></p>
-      // //</button>
-      // `;
-
-      //   productCard
-      //     .querySelector(".product-card")
-      //     .addEventListener("click", itemClick);
 
       // Ensure the price is a number before formatting
       const formattedPrice = Number(product.price).toLocaleString();
 
       // Ensure the `data-createdat` attribute is set on the countdown element
+      //Used remix icon for the heart icon
       productCard.innerHTML = `
         <div class="product-card">
-            <div class="love-icon">
-            <i class="ri-heart-line"></i>
-        </div>
-        <img src="${product.image}" alt="${product.name}" class="product-image"/>
+            <div onclick="toggleHeart(${product.id})" class="love-icon">
+             ${
+               product.isInWishlist
+                 ? '<i class="ri-heart-fill"></i>'
+                 : '<i class="ri-heart-line"></i>'
+             } 
+            </div>
+        <img src="${product.image}" alt="${
+        product.name
+      }" class="product-image"/>
         <div product-info>
-            <h3 class="product-name">${product.name}</h3>
+          <h3>
+            <a class="product-name" href="product_description.html?id=${
+              product.id
+            }">${product.name}</a>
+          </h3>
             <p class="price">₦${formattedPrice}</p>
-            <p class="expires">Time Left: <span class="countdown" data-createdat="${product.createdat}">${countdown}</span></p>
+            <p class="expires">Time Left: <span class="countdown" data-createdat="${
+              product.createdat
+            }">${countdown}</span></p>
         </div>
-    </div>
+      </div>
     `;
 
       // Set the `data-createdat` attribute explicitly
@@ -121,6 +124,21 @@ setInterval(() => {
     }
   });
 }, 1000);
+
+const toggleHeart = (pId) => {
+  console.log("Heart icon clicked");
+  const response = fetch("/toggle-wishlist", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      userId: user.id,
+      productId: pId,
+    }),
+  });
+  window.location.reload();
+};
 
 //Dropdown functionality
 // Prevent default behavior of dropdown menu click

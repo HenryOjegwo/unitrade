@@ -278,6 +278,26 @@ app.post("/get-products", async (req, res) => {
   }
 });
 
+app.post("/get-description", async (req, res) => {
+  const { productId } = req.body;
+  if (!productId) {
+    return res.status(400).json({ message: "ID is required" });
+  }
+
+  try {
+    const result = await db.query(`SELECT * FROM quiksell WHERE id = $1`, [
+      productId,
+    ]);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+    res.json(result.rows[0]);
+  } catch (error) {
+    console.error("Error fetching product description:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 app.post("/toggle-wishlist", async (req, res) => {
   const { userId, productId } = req.body;
   console.log("Toggle wishlist endpoint called");
@@ -449,6 +469,59 @@ app.get("/get-deliveries", async (req, res) => {
   }
 });
 
+app.post("/log-delivery", async (req, res) => {
+  console.log("Log delivery endpoint called");
+  const {
+    userId,
+    userMail,
+    userTel,
+    userName,
+    clientName,
+    clientTel,
+    deliveryType,
+    pickupLocation,
+    dropoffLocation,
+    packageDescription,
+  } = req.body;
+  if (
+    !userId ||
+    !userMail ||
+    !userTel ||
+    !userName ||
+    !clientName ||
+    !clientTel ||
+    !pickupLocation ||
+    !dropoffLocation ||
+    !packageDescription
+  ) {
+    return res.status(400).json({ message: "All fields are required" });
+  }
+  try {
+    await db.query(
+      "INSERT INTO deliverylogs (helperid, helpermail, helpertel, helpername, clientname, clienttel, deliverytype, pickuplocation, dropofflocation, packagedescription) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)",
+      [
+        userId,
+        userMail,
+        userTel,
+        userName,
+        clientName,
+        clientTel,
+        deliveryType,
+        pickupLocation,
+        dropoffLocation,
+        packageDescription,
+      ]
+    );
+
+    console.log("Delivery logged successfully");
+
+    res.json({ message: "Delivery logged successfully" });
+  } catch (error) {
+    console.error("Error logging delivery:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 // Updated endpoint to handle POST request for fetching deliveries
 app.post("/my-deliveries", async (req, res) => {
   const { email } = req.body; // Use req.body to get the email
@@ -470,6 +543,7 @@ app.post("/my-deliveries", async (req, res) => {
   }
 });
 
+// This endpoint deletes delivery data when it is called from the profile.js
 app.delete("/delete-delivery", async (req, res) => {
   const { id } = req.body;
 

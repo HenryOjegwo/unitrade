@@ -46,7 +46,8 @@
 
                 <button id="editprofile"  type="button" class="btn">Edit Profile</button>
                 <button id="deliveryuploads"  type="button" class="btn">My Delivery</button>
-                <button id="quikselluploads"  type="button" class="btn">My Quiksell</button>
+                <button id="quikselluploads"  type="button" class="btn">My Quiksell</button><br><br>
+                <button id="deliveryForm" type="button" class="btn">Delivery Form</button>
 
                 
             </div>
@@ -74,6 +75,53 @@
                     <button type="button" id="closeModalBtn">Cancel</button>
                 </form>
             </div>
+        </div>
+
+        <div id="deliveryFormModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <h2>Pickup/Dropoff Form</h2>
+                <form id="uploadForm">
+                    <label>Client Name</label><br/>
+                    <input type="text" id="clientName" name="name"><br/><br/>
+
+                    <label>Number</label><br/>
+                    <input type="tel" id="clientTelNo" name="telNum"><br/><br/>
+
+                    <label>Product Description</label><br/>
+                    <textarea id="packageDescription" rows="3" required></textarea><br/><br/>
+
+                    <label>Type of Delivery</label><br>
+                    <select id="deliveryType" required>
+                        <option value="">Select Type of Delivery</option>
+                        <option value="pickup">Pick Up</option>
+                        <option value="dropoff">Drop Off</option>
+                    </select><br><br>
+
+                    <label>Pickup Location:</label><br>
+                    <select id="pickupLocation" required>
+                        <option value="">Select Pickup Location</option>
+                        <option value="girls-hostel">Girls Hostel</option>
+                        <option value="boys-hostel">Boys Hostel</option>
+                        <option value="library">Library</option>
+                        <option value="cafeteria">Cafeteria</option>
+                    </select><br><br>
+
+                    <label>Delivery Location:</label><br>
+                    <select id="deliveryLocation" required>
+                        <option value="">Select Delivery Location</option>
+                        <option value="girls-hostel">Girls Hostel</option>
+                        <option value="boys-hostel">Boys Hostel</option>
+                        <option value="library">Library</option>
+                        <option value="cafeteria">Cafeteria</option>
+                    </select><br><br>
+
+
+
+                    <button type="submit" id="logButton">Log</button>
+                    <button type="button" id="closeFormBtn">Cancel</button>
+                </form>
+            </div>
+
         </div>
 
         <!-- This is the delivery uploads modal -->
