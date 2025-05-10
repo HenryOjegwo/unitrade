@@ -28,7 +28,7 @@
           <option value="girls-hostel">Girls Hostel</option>
           <option value="boys-hostel">Boys Hostel</option>
           <option value="library">Library</option>
-          <option value="cafeteria">Cafeteria</option>
+          <option value="Congo">Congo</option>
         </select>
 
         <label>Drop Off</label>
@@ -38,9 +38,27 @@
           <option value="boys-hostel">Boys Hostel</option>
           <option value="library">Library</option>
           <option value="cafeteria">Cafeteria</option>
+          <option value="Congo">Congo</option>
         </select>
 
         <button id="filter-button">Filter</button>
+      </div>
+
+      <div>
+        <h3>Delivery Name: ${delivery.deliveryname}</h3>
+        <p>Email: ${delivery.deliverymail}</p>
+        <p>Phone Number: ${delivery.deliverytel}</p>
+        <p>Pickup Location: ${delivery.leavingfrom}</p>
+        <p>Delivery Location: ${delivery.gettingto}</p>
+        <p>
+          Time Left:
+          <span
+            class="countdown"
+            data-createdat="${delivery.deliverycreate}"
+            data-availablefor="${delivery.timeavailable}"
+            >${countdown}</span
+          >
+        </p>
       </div>
 
       <div id="delivery-helpers-container">

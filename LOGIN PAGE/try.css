@@ -340,7 +340,26 @@ section {
   }
 }
 
-/* Media Queries */
+/* Shared small screen styles */
+@media (max-width: 1200px) {
+  header,
+  header.sticky {
+    padding: 12px 3%;
+  }
+
+  section {
+    padding: 80px 3% 70px;
+  }
+
+  .home {
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 992px) {
+  /* Already handled in 1200px block, keep only specific overrides if needed */
+}
+
 @media (max-width: 768px) {
   header {
     padding: 14px 5%;
@@ -364,11 +383,8 @@ section {
     font-size: 14px;
   }
 }
-@media (max-width: 480px) {
-  header {
-    padding: 14px 2%;
-  }
 
+@media (max-width: 576px) {
   .home-text h1 {
     font-size: 24px;
   }
@@ -381,272 +397,8 @@ section {
     padding: 10px 15px;
     font-size: 12px;
   }
-}
-@media (max-width: 1700px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-  .home {
-    gap: 1rem;
-  }
-}
-@media (max-width: 1200px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 992px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 768px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 576px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 480px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 360px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 320px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 280px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 240px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 200px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 160px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 140px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 120px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 100px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
 
-@media (max-width: 80px) {
   header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 60px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 50px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 40px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 30px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 20px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 10px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 5px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
-  }
-}
-@media (max-width: 1px) {
-  header {
-    padding: 12px 3%;
-  }
-  header.sticky {
-    padding: 10px 3%;
-  }
-  section {
-    padding: 80px 3% 70px;
+    padding: 14px 2%;
   }
 }

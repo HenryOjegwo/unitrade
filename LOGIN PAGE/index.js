@@ -52,6 +52,11 @@ app.post("/login", async (req, res) => {
 
     //Since the password is hashed it uses the argon to unhash it and compare with user input
     const user = userInfo.rows[0];
+    if (!user.isactive) {
+      return res.status(403).json({
+        message: "Your account has been deactivated. Please contact support.",
+      });
+    }
     const ispasswordMatch = await argon2.verify(user.password, password);
     if (!ispasswordMatch) {
       return res.status(404).json({ message: "Invalid Password" });
@@ -65,9 +70,19 @@ app.post("/login", async (req, res) => {
   }
 });
 
+app.get("/get-all-users", async (req, res) => {
+  try {
+    const result = await db.query("SELECT * FROM user_data1");
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
 //endpoint to display login page when the page is loaded
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/login.html");
+  res.sendFile(__dirname + "/login2.html");
 });
 
 //endpoint to send the register page when the page is loaded
@@ -251,6 +266,54 @@ app.post("/quiksell_upload", upload.single("image"), async (req, res) => {
     res.json({ message: "Product uploaded successfully" });
   } catch (error) {
     console.error("Error uploading product:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.put("/activate-user", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const result = await db.query(
+      "UPDATE user_data1 SET isactive = true WHERE email = $1",
+      [email]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User activated successfully" });
+  } catch (error) {
+    console.error("Error activating user:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+app.put("/deactivate-user", async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: "Email is required" });
+  }
+
+  try {
+    const result = await db.query(
+      "UPDATE user_data1 SET isactive = false WHERE email = $1",
+      [email]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    res.json({ message: "User deactivated successfully" });
+  } catch (error) {
+    console.error("Error deactivating user:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 });

@@ -139,7 +139,7 @@ const getDescription = async (pId) => {
   }" class="product-image"/>
             </div>
 
-            <<div class="home-text">
+            <div class="home-text">
                 <h4>${data.name}</h4><br>
                 <h4>₦${formattedPrice}</h4><br>
                 <h4>Time Left: <span class="countdown" data-createdat="${
@@ -178,5 +178,25 @@ const header = document.querySelector("header");
 window.addEventListener("scroll", function () {
   header.classList.toggle("sticky", this.window.scrollY > 0);
 });
+
+// //Dropdown functionality
+// // Prevent default behavior of dropdown menu click
+// const dropdownIcon = document.getElementById("dropdown-icon");
+// const dropdownMenu = document.getElementById("dropdown-menu");
+
+// dropdownIcon.addEventListener("click", (event) => {
+//   event.preventDefault(); // Prevent the page from scrolling to the top
+//   dropdownMenu.classList.toggle("show"); // Toggle visibility
+// });
+
+// // Optional: Close the dropdown menu if clicked outside
+// document.addEventListener("click", (event) => {
+//   if (
+//     !dropdownIcon.contains(event.target) &&
+//     !dropdownMenu.contains(event.target)
+//   ) {
+//     dropdownMenu.classList.remove("show");
+//   }
+// });
 
 document.addEventListener("DOMContentLoaded", getWishList);

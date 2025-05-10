@@ -20,19 +20,25 @@
 
             <ul class="navbar">
                 <li><a href="landing.html" >Home</a></li>
-                <li><a href="#">About</a></li>
                 <li><a href="#">Shop</a></li>
                 <li><a href="view_delivery.html">Delivery</a></li>
                 <li><a href="quiksell.html">Quicksell</a></li>
             </ul>
 
             <div class="icons">
-                <a href="#"><i class="ri-search-line"></i></a>
                 <a href="#"><i class="ri-user-line"></i></a>
                 <a href="#"><i class="ri-shopping-cart-line"></i></a>
                 <div class="bx bx-menu" id="menu-icon"></div>
-                <a href="#"><i class="ri-menu-2-line"></i>
+                <a href="#" class="dropdown-icon" id="dropdown-icon"><i class="ri-menu-2-line"></i>
             </div>
+            
+            <div class="dropdown-menu" id="dropdown-menu">
+                <a href="landing.html">Home</a>
+                <a href="#">Shop</a>
+                <a href="delivery.html">Delivery</a>
+                <a href="quiksell.html">QuikSell</a>
+            </div>
+
         </header>
 
         <!---home section design--->
@@ -143,10 +149,8 @@
                 <h2>My Quiksell</h2>
                 <p>Here you can view your quiksell uploads.</p>
                 <div id="quiksellUploadsList"></div>
-                <!-- <button type="button" id="addQuiksellBtn">Add Quiksell</button>
-                <button type="button" id="editQuiksellBtn">Edit Quiksell</button>
-                <button type="button" id="deleteQuiksellBtn">Delete Quiksell</button> -->
                 <button type="button" id="closeQuiksellModalBtn">Close</button>
+                <button type="button" id="addQuiksellBtn">Add Listing</button>
             </div>
         </div>
 

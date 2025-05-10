@@ -291,6 +291,7 @@ const getDeliveryData = async () => {
         delivery.deliverycreate,
         delivery.timeavailable
       );
+      console.log(countdown);
 
       deliveryCard.innerHTML = `
         <h3>${delivery.deliveryname}</h3>
@@ -302,7 +303,6 @@ const getDeliveryData = async () => {
         <button class="delete-delivery" onclick=deleteDelivery(${delivery.id}) data-id="${delivery.id}">Delete</button>
       `;
 
-      console.log(delivery.id);
       deliveryContainer.appendChild(deliveryCard);
     });
 
@@ -499,36 +499,27 @@ const getQuiksellData = async () => {
 
       const formattedPrice = Number(product.price).toLocaleString();
       const countdown = calculateQuiksellCountdown(product.createdat);
+      console.log(product.image);
 
       productCard.innerHTML = `
-        <img src="${product.image}" alt="${product.name}" class="quiksell-image width="50%" height="110px"/>
+      <div class="quiksell-card">
+        <img src="${product.image}" alt="${product.name}" class="quiksell-image" />
         <h3>${product.name}</h3>
-        <p>Price: ${formattedPrice}</p>
+        <p>Price: ₦${formattedPrice}</p>
         <p>Date Created: ${product.createdat}</p>
         <p>Time Left: <span class="countdown" data-createdat="${product.createdat}">${countdown}</span></p>
         <button class="delete-quiksell" onclick=deleteQuiksell(${product.id})>Delete</button>
+      </div>
       `;
 
       const countdownElement = productCard.querySelector(".countdown");
       countdownElement.setAttribute("data-createdat", product.createdat);
-
       productContainer.appendChild(productCard);
     });
   } catch (error) {
     console.error("Error fetching quiksell data:", error);
   }
 };
-
-setInterval(() => {
-  const countdownElements = document.querySelectorAll(".countdown");
-  countdownElements.forEach((element) => {
-    const createdAt = element.getAttribute("data-createdat");
-    if (createdAt) {
-      const countdown = calculateQuiksellCountdown(createdAt);
-      element.textContent = countdown;
-    }
-  });
-}, 1000);
 
 //Delete quiksell product that user uploaded
 const deleteQuiksell = async (productId) => {
@@ -573,6 +564,11 @@ closeQuiksellModalBtn.addEventListener("click", () => {
   modal.style.display = "none";
 });
 
+const addQuiksellBtn = document.getElementById("addQuiksellBtn");
+addQuiksellBtn.addEventListener("click", () => {
+  window.location = "/quiksell_upload.html"; // Redirect to the quiksell upload page
+});
+
 const updateForm = document.getElementById("editProfileForm");
 updateForm.addEventListener("submit", updateProfile);
 
@@ -580,4 +576,55 @@ const header = document.querySelector("header");
 
 window.addEventListener("scroll", function () {
   header.classList.toggle("sticky", this.window.scrollY > 0);
+});
+
+// Unified function to update both delivery and quiksell countdowns
+const updateAllCountdowns = () => {
+  // Update delivery countdowns
+  const deliveryCountdownElements = document.querySelectorAll(
+    ".countdown[data-availablefor]"
+  );
+  deliveryCountdownElements.forEach((element) => {
+    const createdAt = element.getAttribute("data-createdat");
+    const availableFor = element.getAttribute("data-availablefor");
+    if (createdAt && availableFor) {
+      const countdown = calculateCountdown(createdAt, availableFor);
+      element.textContent = countdown;
+    }
+  });
+
+  // Update quiksell countdowns
+  const quiksellCountdownElements = document.querySelectorAll(
+    ".countdown:not([data-availablefor])"
+  );
+  quiksellCountdownElements.forEach((element) => {
+    const createdAt = element.getAttribute("data-createdat");
+    if (createdAt) {
+      const countdown = calculateQuiksellCountdown(createdAt);
+      element.textContent = countdown;
+    }
+  });
+};
+
+// Start a single interval to update all countdowns
+setInterval(updateAllCountdowns, 1000);
+
+//Dropdown functionality
+// Prevent default behavior of dropdown menu click
+const dropdownIcon = document.getElementById("dropdown-icon");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+dropdownIcon.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the page from scrolling to the top
+  dropdownMenu.classList.toggle("show"); // Toggle visibility
+});
+
+// Optional: Close the dropdown menu if clicked outside
+document.addEventListener("click", (event) => {
+  if (
+    !dropdownIcon.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("show");
+  }
 });

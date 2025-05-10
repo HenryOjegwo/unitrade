@@ -68,12 +68,11 @@ const getDescription = async (pId) => {
                 }">${calculateCountdown(data.createdat)}</span></h4><br>
                 <h4>PRODUCT DESCRIPTION: ${data.description}</h4><br>
                 <h4>VENDOR NAME: ${data.user_name}</h4><br>
-                <h4>VENDOR NUMBER:${data.phonenumber}</h4><br>
+                <h4>VENDOR NUMBER: ${data.phonenumber}</h4><br>
             </div>
 
         `;
   productDescriptionContainer.appendChild(descriptionCard);
-  console.log("Did I get here?");
 };
 
 setInterval(() => {
@@ -86,6 +85,26 @@ setInterval(() => {
     }
   });
 }, 1000);
+
+//Dropdown functionality
+// Prevent default behavior of dropdown menu click
+const dropdownIcon = document.getElementById("dropdown-icon");
+const dropdownMenu = document.getElementById("dropdown-menu");
+
+dropdownIcon.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the page from scrolling to the top
+  dropdownMenu.classList.toggle("show"); // Toggle visibility
+});
+
+// Optional: Close the dropdown menu if clicked outside
+document.addEventListener("click", (event) => {
+  if (
+    !dropdownIcon.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("show");
+  }
+});
 
 document.addEventListener("DOMContentLoaded", () => {
   getDescription(productId);
