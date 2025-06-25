@@ -1,0 +1,261 @@
+/* Color System */
+:root {
+  --primary: #4361ee;
+  --primary-dark: #3a0ca3;
+  --accent: #4895ef;
+  --success: #4cc9f0;
+  --danger: #f72585;
+  --light: #f8f9fa;
+  --dark: #212529;
+  --gray: #6c757d;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  list-style: none;
+}
+/* Base Styles */
+body {
+  font-family: "Poppins", sans-serif;
+  background: #f5f7fa;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+
+/* Card Component */
+.card {
+  background: white;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  margin: 20px auto;
+  max-width: 800px;
+}
+
+/* Header/Navigation */
+/* Header Styling */
+header {
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e3f7ff;
+  padding: 20px 10%;
+  border-bottom: 1px solid #f7f9fb;
+}
+
+.logo {
+  width: 150px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar a {
+  font-size: 1rem;
+  color: #334155;
+  font-weight: 400;
+  padding: 10px 25px;
+  margin: 0 5px;
+  background: transparent;
+  border-radius: 30px;
+  transition: all 0.45s ease;
+  flex-wrap: wrap;
+}
+
+.navbar a:hover {
+  background: #f7f9fb;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.icons i {
+  height: 25px;
+  width: 8px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: #334155;
+  font-size: 22px;
+  margin-right: 25px;
+  margin-left: 10px;
+  transition: all 0.45s ease;
+}
+
+.icons i:hover {
+  transform: scale(0.9);
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 50px; /* Adjust depending on navbar height */
+  right: 20px;
+  background: linear-gradient(
+    145deg,
+    #e3f7ff,
+    #c1e9f6
+  ); /* Soft gradient background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  z-index: 10;
+  padding: 10px 0; /* Space around items */
+  min-width: 160px; /* Set a minimum width for the menu */
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: #333; /* Adjust this color to match the navbar text color */
+  font-family: "Arial", sans-serif; /* Use the same font family as the navbar */
+  font-size: 1rem; /* Adjust the font size to match the navbar */
+  font-weight: 500; /* Use a medium font weight for consistency */
+  text-decoration: none;
+  border-bottom: 1px solid #ddd; /* Divider between items */
+  transition: background-color 0.3s, padding-left 0.3s; /* Smooth transition effects */
+}
+
+.dropdown-menu a:hover {
+  background-color: #a4d8f4; /* Slightly darker background when hovered */
+  padding-left: 20px; /* Shift to the left when hovered for a subtle effect */
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+/* Adding a little animation to the dropdown appearance */
+.dropdown-menu.show {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Form Elements */
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px;
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus {
+  border-color: var(--accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(67, 97, 238, 0.3);
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+.mt-3 {
+  margin-top: 1rem;
+}
+.d-flex {
+  display: flex;
+}
+.align-center {
+  align-items: center;
+}
+.justify-between {
+  justify-content: space-between;
+}
+.gap-2 {
+  gap: 0.5rem;
+}
+
+/* Time Options */
+.time-options {
+  display: flex;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.time-option {
+  padding: 10px 20px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: white;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.time-option:hover {
+  border-color: var(--accent);
+}
+
+.time-option.active {
+  background: var(--primary);
+  color: white;
+  border-color: var(--primary);
+  font-weight: 600;
+}
+
+/* Time Badge */
+.time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: var(--accent);
+  color: white;
+  border-radius: 50px;
+  font-weight: 600;
+}

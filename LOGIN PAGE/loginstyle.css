@@ -4,24 +4,30 @@
   box-sizing: border-box;
   font-family: Arial, sans-serif;
 }
+
 :root,
 body {
   height: 100%;
-  /* background-color: #0056b3; */
 }
 
 body {
   height: 100vh;
+  margin: 0;
   display: flex;
   justify-content: center;
   align-items: center;
   background-image: url("../PICTURES/gpt.png");
+  background-color: skyblue;
+  background-size: cover;
+  background-position: center;
 }
 
 .main-container {
-  width: 100%;
-  height: 100vh;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 .image-section {
@@ -41,19 +47,19 @@ body {
 .form-section {
   width: 50%;
   display: flex;
-  align-items: center;
   justify-content: center;
+  align-items: center;
 }
 
 .container {
   width: 350px;
-  background: white;
+  background: #14026e; /* Dark purple shade */
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 8px;
+  border-radius: 30px; /* More rounded corners for the login box */
   text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 10px 20px rgba(0, 0, 0, 0.2),
+    0 15px 40px rgba(0, 0, 0, 0.15);
 }
-
 .form-container {
   display: none;
 }
@@ -62,21 +68,29 @@ body {
   display: block;
 }
 
-.form-container input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+.form-container h2,
+.form-container p {
+  color: white; /* Ensures that text is white */
 }
 
+.form-container input,
 .form-container button {
   width: 100%;
   padding: 10px;
+  margin: 10px 0;
+  border-radius: 12px; /* More rounded edges */
+  border: 1px solid #ccc;
+}
+
+.form-container input {
+  background: transparent;
+  color: white;
+}
+
+.form-container button {
   background: #007bff;
   color: white;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
 }
 
@@ -84,11 +98,7 @@ body {
   background: #0056b3;
 }
 
-.form-container p {
-  margin-top: 10px;
-}
-
 .form-container a {
-  color: #007bff;
-  text-decoration: none;
+  color: white;
+  text-decoration: underline;
 }

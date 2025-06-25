@@ -61,6 +61,7 @@ const handleSubmit = async (ev) => {
 
   const data = await response.json();
   if (response.ok) {
+    alert("Registration Successful");
     window.location = "/login.html";
     return;
   }

@@ -78,7 +78,7 @@ header {
 .icons i {
   height: 25px;
   width: 8px;
-  background: #f7f9fb;
+  background: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -602,6 +602,22 @@ span {
   }
   section {
     padding: 80px 3% 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  .navbar {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* Dropdown icon will appear only on small screens */
+  .dropdown-icon {
+    display: block;
+  }
+
+  .navbar a:not(.dropdown-icon) {
+    display: none; /* Hide all icons except the dropdown on small screens */
   }
 }
 

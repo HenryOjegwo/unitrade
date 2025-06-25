@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendor Dashboard | Student Marketplace</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img
+          src="whitespace_logo.png"
+          alt="Student Marketplace Logo"
+          class="logo"
+        />
+        <span>Vendor Dashboard</span>
+      </div>
+      <div class="nav-links">
+        <a href="#" class="active"><i class="fas fa-store"></i> Products</a>
+        <a href="profile.html" class="profile-btn"
+          ><i class="fas fa-user"></i> Profile</a
+        >
+        <a href="vendor_login.html" class="logout-btn"
+          ><i class="fas fa-sign-out-alt"></i> Logout</a
+        >
+      </div>
+    </nav>
+
+    <div class="dashboard-container">
+      <!-- ✅ Welcome Message -->
+      <div class="welcome-banner" style="text-align: center; margin: 20px 0">
+        <h2>Welcome, <span id="dashboard-vendor-name">Vendor</span>!</h2>
+      </div>
+
+      <!-- Quick Stats -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <i class="fas fa-box-open"></i>
+          <div class="stat-info">
+            <h3>Total Products</h3>
+            <p id="total-products">0</p>
+          </div>
+        </div>
+
+        <a
+          href="view_delivery.html"
+          class="stat-card"
+          id="delivery-helpers-card"
+        >
+          <i class="fas fa-truck"></i>
+          <div class="stat-info">
+            <h3>Delivery Helpers</h3>
+            <p id="available-helpers">0 Available</p>
+          </div>
+        </a>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content-grid">
+        <!-- Product Listings -->
+        <div class="main-content">
+          <div class="section-header">
+            <h2>Product Listings</h2>
+            <a href="upload_product.html" class="btn-primary">
+              <i class="fas fa-plus"></i> Add New Product
+            </a>
+          </div>
+
+          <div class="product-filters">
+            <input
+              type="text"
+              id="search-products"
+              placeholder="Search products..."
+            />
+            <select id="status-filter">
+              <option value="all">All Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <select id="sort-products">
+              <option value="newest">Newest First</option>
+              <option value="oldest">Oldest First</option>
+              <option value="price-high">Price: High to Low</option>
+              <option value="price-low">Price: Low to High</option>
+            </select>
+          </div>
+
+          <div class="products-grid" id="products-container">
+            <!-- Product cards will be added dynamically -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="vendor_dashbord.js"></script>
+  </body>
+</html>

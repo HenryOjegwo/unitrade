@@ -1,0 +1,652 @@
+/* General Reset and Body Styling */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-decoration: none;
+  list-style: none;
+}
+
+body {
+  color: #0f172a;
+  background-color: #ffeaea;
+}
+
+/* Product List Styling */
+#product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+  padding: 2rem;
+}
+
+.product-card {
+  position: relative; /* Add this */
+  background: #e3f7ff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease;
+  padding: 1.5rem; /* add spacing inside the entire card */
+  box-sizing: border-box; /* ensures padding doesn't break layout */
+}
+
+.product-card:hover {
+  transform: scale(1.02);
+}
+
+.product-image {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+}
+
+.product-info {
+  padding: 1rem 1.4rem 1rem 2rem; /* Adjusted left padding */
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.product-name {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.price {
+  display: inline-block;
+  padding: 4px 16px;
+  background: transparent;
+  border: 2px solid #ef4444;
+  color: #ef4444;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.45s ease;
+}
+
+.expires {
+  color: #6b7280;
+  font-size: 0.9rem;
+}
+
+/* Love Icon Styling */
+.love-icon {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background-color: rgba(255, 255, 255, 0.85);
+  border-radius: 50%;
+  padding: 6px;
+  z-index: 10;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.love-icon i {
+  font-size: 1.2rem;
+  color: #ef4444;
+}
+
+/* Header Styling */
+header {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #e3f7ff;
+  padding: 17px 10%;
+  border-bottom: 1px solid #f7f9fb;
+}
+
+.logo {
+  width: 150px;
+}
+
+.logo img {
+  width: 100%;
+  height: auto;
+}
+
+.navbar {
+  display: flex;
+}
+
+.navbar a {
+  font-size: 1rem;
+  color: #334155;
+  font-weight: 400;
+  padding: 10px 25px;
+  margin: 0 5px;
+  background: transparent;
+  border-radius: 30px;
+  transition: all 0.45s ease;
+  flex-wrap: wrap;
+}
+
+.navbar a:hover {
+  background: #f7f9fb;
+}
+
+.icons {
+  display: flex;
+  align-items: center;
+}
+
+.icons i {
+  height: 25px;
+  width: 8px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: #334155;
+  font-size: 22px;
+  margin-right: 25px;
+  margin-left: 10px;
+  transition: all 0.45s ease;
+}
+
+.icons i:hover {
+  transform: scale(0.9);
+}
+
+/* Dropdown Menu Styling */
+.dropdown-menu {
+  display: none; /* Hide by default */
+  position: absolute;
+  top: 50px; /* Adjust depending on navbar height */
+  right: 20px;
+  background: linear-gradient(
+    145deg,
+    #e3f7ff,
+    #c1e9f6
+  ); /* Soft gradient background */
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for depth */
+  z-index: 10;
+  padding: 10px 0; /* Space around items */
+  min-width: 160px; /* Set a minimum width for the menu */
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 12px 20px;
+  color: #333; /* Adjust this color to match the navbar text color */
+  font-family: "Arial", sans-serif; /* Use the same font family as the navbar */
+  font-size: 1rem; /* Adjust the font size to match the navbar */
+  font-weight: 500; /* Use a medium font weight for consistency */
+  text-decoration: none;
+  border-bottom: 1px solid #ddd; /* Divider between items */
+  transition: background-color 0.3s, padding-left 0.3s; /* Smooth transition effects */
+}
+
+.dropdown-menu a:hover {
+  background-color: #a4d8f4; /* Slightly darker background when hovered */
+  padding-left: 20px; /* Shift to the left when hovered for a subtle effect */
+}
+
+.dropdown-menu a:last-child {
+  border-bottom: none; /* Remove border for the last item */
+}
+
+/* Adding a little animation to the dropdown appearance */
+.dropdown-menu.show {
+  display: block;
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation for smooth fade-in */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Section Layouts */
+section {
+  padding: 100px 11% 90px;
+}
+
+.home {
+  height: 100vh;
+  width: 100%;
+  background-image: url(../img/background.svg);
+  background-color: #e3f7ff;
+  background: cover;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.home-text h4 {
+  font-size: 22px;
+  font-weight: 500;
+  color: #334155;
+}
+
+.home-text h3 {
+  font-size: 26px;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 25px 0 45px;
+}
+
+.home-text h1 {
+  font-size: 36px;
+  color: #0f172a;
+  line-height: 1.2;
+  margin: 25px 0 45px;
+}
+
+.btn {
+  display: inline-block;
+  padding: 16px 30px;
+  background: #0f172a;
+  color: #ffffff;
+  font-size: 15px;
+  letter-spacing: 1px;
+  border-radius: 30px;
+  transition: all 0.45s ease;
+}
+
+.btn:hover {
+  letter-spacing: 2px;
+  opacity: 0.8;
+}
+
+.contact {
+  padding: 180px 11% 40px;
+}
+
+.contact {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, auto));
+  gap: 2rem;
+  align-items: center;
+}
+
+.contact-content h5 {
+  font-size: 1.1rem;
+  margin-bottom: 20px;
+}
+
+.contact-content li {
+  margin-bottom: 12px;
+}
+
+.contact-content li a {
+  display: block;
+  font-size: 15px;
+  color: #374151;
+  font-weight: 400;
+  transition: all 0.45s ease;
+}
+
+.contact-content li a:hover {
+  color: var(--text-color);
+  transform: translateX(-5px);
+}
+
+.end-text p {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: var(--other-color);
+}
+
+/* Footer Section */
+.end-text p {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  letter-spacing: 1px;
+  color: #6b7280;
+}
+.end-text p a {
+  color: #0f172a;
+  font-weight: 600;
+}
+.end-text p a:hover {
+  text-decoration: underline;
+}
+
+/* Media Query for Small Screens */
+@media (max-width: 600px) {
+  .navbar {
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  /* Dropdown icon will appear only on small screens */
+  .dropdown-icon {
+    display: block;
+  }
+
+  .navbar a:not(.dropdown-icon) {
+    display: none; /* Hide all icons except the dropdown on small screens */
+  }
+}
+
+/* Media Queries */
+@media (max-width: 768px) {
+  header {
+    padding: 14px 5%;
+  }
+
+  .home {
+    grid-template-columns: 1fr;
+    padding: 0 5%;
+  }
+
+  .home-text h1 {
+    font-size: 28px;
+  }
+
+  .home-text h3 {
+    font-size: 22px;
+  }
+
+  .btn {
+    padding: 12px 20px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 480px) {
+  header {
+    padding: 14px 2%;
+  }
+
+  .home-text h1 {
+    font-size: 24px;
+  }
+
+  .home-text h3 {
+    font-size: 20px;
+  }
+
+  .btn {
+    padding: 10px 15px;
+    font-size: 12px;
+  }
+}
+@media (max-width: 1700px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+  .home {
+    gap: 1rem;
+  }
+}
+@media (max-width: 1200px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 992px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 768px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 576px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 480px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 360px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 320px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 280px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 240px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 200px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 160px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 140px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 120px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 100px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+
+@media (max-width: 80px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 60px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 50px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 40px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 30px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 20px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 10px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 5px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}
+@media (max-width: 1px) {
+  header {
+    padding: 12px 3%;
+  }
+  header.sticky {
+    padding: 10px 3%;
+  }
+  section {
+    padding: 80px 3% 70px;
+  }
+}

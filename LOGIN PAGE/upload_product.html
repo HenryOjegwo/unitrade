@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add New Product | Student Marketplace</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img
+          src="whitespace_logo.png"
+          alt="Student Marketplace Logo"
+          class="logo"
+        />
+        <span>Add New Product</span>
+      </div>
+      <div class="nav-links">
+        <a href="vendor_dashbord.html"
+          ><i class="fas fa-arrow-left"></i> Back to Dashboard</a
+        >
+      </div>
+    </nav>
+
+    <div class="product-form-container">
+      <form id="add-product-form" class="modern-form">
+        <div class="form-header">
+          <h2>Product Details</h2>
+          <p>Fill in the details of your product</p>
+        </div>
+
+        <div class="form-group">
+          <label for="product-name">Product Name</label>
+          <div class="input-with-icon">
+            <i class="fas fa-tag"></i>
+            <input
+              type="text"
+              id="product-name"
+              name="product-name"
+              required
+              placeholder="Enter product name"
+            />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="category">Category</label>
+          <div class="category-selector">
+            <div class="category-option">
+              <input
+                type="radio"
+                id="electronics"
+                name="category"
+                value="electronics"
+                required
+              />
+              <label for="electronics">
+                <i class="fas fa-laptop"></i>
+                <span>Electronics</span>
+              </label>
+            </div>
+            <div class="category-option">
+              <input
+                type="radio"
+                id="clothing"
+                name="category"
+                value="clothing"
+                required
+              />
+              <label for="clothing">
+                <i class="fas fa-tshirt"></i>
+                <span>Clothing</span>
+              </label>
+            </div>
+            <div class="category-option">
+              <input
+                type="radio"
+                id="books"
+                name="category"
+                value="books"
+                required
+              />
+              <label for="books">
+                <i class="fas fa-book"></i>
+                <span>Books</span>
+              </label>
+            </div>
+            <div class="category-option">
+              <input
+                type="radio"
+                id="sports"
+                name="category"
+                value="sports"
+                required
+              />
+              <label for="sports">
+                <i class="fas fa-running"></i>
+                <span>Sports</span>
+              </label>
+            </div>
+            <div class="category-option">
+              <input
+                type="radio"
+                id="jewelry"
+                name="category"
+                value="jewelry"
+                required
+              />
+              <label for="jewelry">
+                <i class="fas fa-gem"></i>
+                <span>Jewelry</span>
+              </label>
+            </div>
+            <div class="category-option">
+              <input
+                type="radio"
+                id="other"
+                name="category"
+                value="other"
+                required
+              />
+              <label for="other">
+                <i class="fas fa-ellipsis-h"></i>
+                <span>Other</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <div class="input-with-icon">
+            <i class="fas fa-align-left"></i>
+            <textarea
+              id="description"
+              name="description"
+              rows="4"
+              required
+              placeholder="Describe your product"
+            ></textarea>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="price">Price (₦)</label>
+            <div class="input-with-icon">
+              <i class="fas fa-money-bill-wave"></i>
+              <input
+                type="number"
+                id="price"
+                name="price"
+                required
+                placeholder="Enter price"
+              />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="quantity">Quantity Available</label>
+            <div class="input-with-icon">
+              <i class="fas fa-box"></i>
+              <input
+                type="number"
+                id="quantity"
+                name="quantity"
+                required
+                placeholder="Enter quantity"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="condition">Condition</label>
+          <div class="condition-selector">
+            <div class="condition-option">
+              <input
+                type="radio"
+                id="new"
+                name="condition"
+                value="new"
+                required
+              />
+              <label for="new">
+                <i class="fas fa-star"></i>
+                <span>New</span>
+              </label>
+            </div>
+            <div class="condition-option">
+              <input
+                type="radio"
+                id="used"
+                name="condition"
+                value="used"
+                required
+              />
+              <label for="used">
+                <i class="fas fa-history"></i>
+                <span>Used - Like New</span>
+              </label>
+            </div>
+            <div class="condition-option">
+              <input
+                type="radio"
+                id="good"
+                name="condition"
+                value="good"
+                required
+              />
+              <label for="good">
+                <i class="fas fa-thumbs-up"></i>
+                <span>Used - Good</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="images">Product Images</label>
+          <div class="image-upload-container">
+            <input
+              type="file"
+              id="images"
+              name="image"
+              accept="image/*"
+              multiple
+              class="image-upload"
+            />
+            <div class="image-preview" id="image-preview">
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Click to upload images (up to 5)</p>
+              <small>Recommended size: 800x800px</small>
+            </div>
+          </div>
+          <div class="preview-grid" id="preview-grid"></div>
+        </div>
+
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-plus"></i>
+            Add Product
+          </button>
+          <button
+            type="button"
+            class="btn-secondary"
+            onclick="window.location.href='vendor.html'"
+          >
+            <i class="fas fa-times"></i>
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <script src="upload_product.js"></script>
+  </body>
+</html>

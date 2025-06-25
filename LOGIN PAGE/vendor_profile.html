@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vendor Profile | Student Marketplace</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="nav-brand">
+        <img
+          src="images/logo.png"
+          alt="Student Marketplace Logo"
+          class="logo"
+        />
+        <span>Vendor Profile</span>
+      </div>
+      <div class="nav-links">
+        <a href="vendor.html"
+          ><i class="fas fa-arrow-left"></i> Back to Dashboard</a
+        >
+      </div>
+    </nav>
+
+    <div class="profile-container">
+      <div class="profile-header">
+        <div class="profile-image">
+          <img
+            src="images/default-avatar.png"
+            alt="Vendor Profile"
+            id="vendor-avatar"
+          />
+          <button class="edit-avatar-btn" id="change-avatar">
+            <i class="fas fa-camera"></i>
+          </button>
+          <input
+            type="file"
+            id="avatar-input"
+            accept="image/*"
+            style="display: none"
+          />
+        </div>
+        <div class="profile-info">
+          <h1 id="vendor-name">John Doe</h1>
+          <p class="vendor-email" id="vendor-email">john.doe@example.com</p>
+          <p class="vendor-phone" id="vendor-phone">+234 123 456 7890</p>
+          <div class="profile-actions">
+            <button class="btn-primary" id="edit-profile-btn">
+              <i class="fas fa-edit"></i> Edit Profile
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="stat-card">
+          <i class="fas fa-box-open"></i>
+          <div class="stat-info">
+            <h3>Total Products</h3>
+            <p id="total-products">0</p>
+          </div>
+        </div>
+      </div>
+
+      <section class="profile-section">
+        <h2>Store Information</h2>
+        <div class="info-grid">
+          <div class="info-item">
+            <label>Store Name</label>
+            <input type="text" id="store-name" readonly class="profile-input" />
+          </div>
+          <div class="info-item">
+            <label>Store Description</label>
+            <input
+              type="text"
+              id="store-description"
+              readonly
+              class="profile-input"
+            />
+          </div>
+        </div>
+      </section>
+
+      <section class="profile-section">
+        <h2>Security</h2>
+        <div class="security-actions">
+          <button class="btn-secondary" id="change-password-btn">
+            <i class="fas fa-key"></i> Change Password
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <script src="vendor_profile.js"></script>
+  </body>
+</html>

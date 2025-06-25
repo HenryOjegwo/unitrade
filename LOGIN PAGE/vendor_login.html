@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Unitrade | Login</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css?family=Raleway:400,700");
+      @import url("https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap");
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: Poppins, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(270deg, #1c4da1, #194494);
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+      }
+
+      .screen {
+        background: linear-gradient(90deg, #01143694, #194494);
+        position: relative;
+        height: 700px;
+        width: 400px;
+        box-shadow: 0px 0px 24px #000308;
+        border-radius: 20px;
+        overflow: hidden;
+      }
+
+      .screen__content {
+        z-index: 1;
+        position: relative;
+        height: 100%;
+      }
+
+      .screen__background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        clip-path: inset(0 0 0 0);
+      }
+
+      .screen__background__shape {
+        transform: rotate(50deg);
+        position: absolute;
+      }
+
+      .screen__background__shape1 {
+        height: 520px;
+        width: 520px;
+        background: #ffffff;
+        top: -50px;
+        right: 120px;
+        border-radius: 0 72px 0 0;
+      }
+
+      .screen__background__shape2 {
+        height: 220px;
+        width: 220px;
+        background: #1c4da1;
+        top: -172px;
+        right: 0;
+        border-radius: 32px;
+      }
+
+      .screen__background__shape3 {
+        height: 540px;
+        width: 190px;
+        background: linear-gradient(270deg, #1c4da1, #194494);
+        top: -24px;
+        right: 0;
+        border-radius: 32px;
+      }
+
+      .screen__background__shape4 {
+        height: 400px;
+        width: 200px;
+        background: #1c4da1;
+        top: 420px;
+        right: 50px;
+        border-radius: 60px;
+      }
+
+      .login {
+        width: 320px;
+        padding: 30px;
+        padding-top: 100px;
+      }
+
+      .logo-container {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+
+      .logo-container img {
+        width: 150px;
+        height: auto;
+        margin-bottom: 10px;
+        filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.5));
+      }
+
+      .logo-container h1 {
+        color: #add8e6;
+        font-size: 24px;
+        margin: 0;
+        font-weight: 600;
+        text-shadow: 0 0 10px rgba(173, 216, 230, 0.5);
+      }
+
+      .logo-container .tagline {
+        color: #add8e6;
+        font-family: "Playfair Display", serif;
+        font-size: 16px;
+        font-style: italic;
+        margin-top: 5px;
+        letter-spacing: 0.5px;
+        text-shadow: 0 0 10px rgba(173, 216, 230, 0.5);
+      }
+
+      .login__field {
+        padding: 20px 0;
+        position: relative;
+      }
+
+      .login__icon {
+        position: absolute;
+        top: 30px;
+        color: #1c4da1;
+      }
+
+      .login__input {
+        border: none;
+        border-bottom: 2px solid #ffffff;
+        background-color: rgba(255, 255, 255, 0.9); /* white background */
+        padding: 10px;
+        padding-left: 24px;
+        font-weight: 600;
+        width: 100%;
+        color: #000000; /* ✅ black text */
+        font-size: 14px;
+        border-radius: 4px;
+      }
+
+      .login__input::placeholder {
+        color: rgba(0, 0, 0, 0.5); /* ✅ light grey placeholder */
+      }
+
+      .login__input:focus {
+        outline: none;
+        border-bottom: 2px solid #1c4da1;
+        background-color: #ffffff;
+        color: #000000;
+      }
+
+      .login__submit {
+        background: #fff;
+        font-size: 14px;
+        margin-top: 30px;
+        padding: 16px 20px;
+        border-radius: 26px;
+        border: 1px solid #d4d3e8;
+        text-transform: uppercase;
+        font-weight: 700;
+        display: flex;
+        align-items: center;
+        width: 100%;
+        color: #1c4da1;
+        box-shadow: 0px 2px 2px #1c4da1;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+
+      .login__submit:hover {
+        border-color: #1c4da1;
+      }
+
+      .button__icon {
+        font-size: 24px;
+        margin-left: auto;
+        color: #1c4da1;
+      }
+
+      .social-login {
+        position: absolute;
+        height: 140px;
+        width: 160px;
+        text-align: center;
+        bottom: 0px;
+        right: 0px;
+        color: #fff;
+      }
+
+      .social-icons {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .social-login__icon {
+        padding: 20px 10px;
+        color: #fff;
+        text-decoration: none;
+        text-shadow: 0px 0px 8px #7875b5;
+      }
+
+      .social-login__icon:hover {
+        transform: scale(1.5);
+      }
+
+      .forgot-password {
+        text-align: center;
+        margin-top: 20px;
+      }
+
+      .forgot-password a {
+        color: #add8e6;
+        text-decoration: none;
+        font-size: 14px;
+        text-shadow: 0 0 10px rgba(173, 216, 230, 0.5);
+      }
+
+      .toggle-password {
+        position: absolute;
+        right: 0;
+        top: 35px;
+        color: #add8e6;
+        cursor: pointer;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="screen">
+        <div class="screen__content">
+          <form id="login-form" class="login">
+            <div class="logo-container">
+              <img src="whitespace_logo.png" alt="Unitrade Logo" />
+              <h1>Student Marketplace</h1>
+              <p class="tagline">Empowering Student Vendors</p>
+            </div>
+
+            <!-- Email field -->
+            <div class="login__field">
+              <i class="login__icon fas fa-user"></i>
+              <input
+                type="email"
+                id="email"
+                class="login__input"
+                placeholder="School Email"
+                required
+              />
+            </div>
+
+            <!-- Password field with show/hide icon -->
+            <div class="login__field">
+              <i class="login__icon fas fa-lock"></i>
+              <input
+                type="password"
+                id="password"
+                class="login__input"
+                placeholder="Password"
+                required
+              />
+              <i id="toggle-password" class="fas fa-eye toggle-password"></i>
+            </div>
+
+            <div class="forgot-password">
+              <a href="#">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="button login__submit">
+              <span class="button__text">Log In</span>
+              <i class="button__icon fas fa-chevron-right"></i>
+            </button>
+
+            <!-- Register link -->
+            <div class="forgot-password" style="margin-top: 15px">
+              <span style="color: #add8e6">Don't have an account?</span>
+              <a
+                href="vendor_register.html"
+                style="margin-left: 5px; font-weight: bold"
+                >Register</a
+              >
+            </div>
+          </form>
+        </div>
+
+        <div class="screen__background">
+          <span
+            class="screen__background__shape screen__background__shape4"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape3"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape2"
+          ></span>
+          <span
+            class="screen__background__shape screen__background__shape1"
+          ></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- JavaScript: Password Toggle -->
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const togglePassword = document.getElementById("toggle-password");
+        const passwordInput = document.getElementById("password");
+
+        togglePassword.addEventListener("click", () => {
+          const type =
+            passwordInput.getAttribute("type") === "password"
+              ? "text"
+              : "password";
+          passwordInput.setAttribute("type", type);
+          togglePassword.classList.toggle("fa-eye");
+          togglePassword.classList.toggle("fa-eye-slash");
+        });
+      });
+    </script>
+
+    <script src="vendor_login.js" defer></script>
+  </body>
+</html>

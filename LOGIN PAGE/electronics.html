@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Electronics | UniTrade</title>
+    <link rel="stylesheet" href="electronics.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/remixicon/fonts/remixicon.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header>
+      <a href="#" class="logo"><img src="whitespace_logo.png"></a>
+
+      <ul class="navbar">
+          <li><a href="landing.html" class="active">Home</a></li>
+          <li><a href="#">Shop</a></li>
+          <li><a href="view_delivery.html">Delivery</a></li>
+          <li><a href="quiksell.html">Quiksell</a></li>
+      </ul>
+
+      <div class="icons">
+          <a href="profile.html"><i class="ri-user-line"></i></a>
+          <a  href="wishlist.html"><i class="ri-shopping-cart-line"></i> <span id="wishlist"></span></a>
+          <div class="bx bx-menu" id="menu-icon"></div>
+          <a href="#" class="dropdown-icon" id="dropdown-icon"><i class="ri-menu-2-line"></i>
+          
+          
+      </div>
+
+      <div class="dropdown-menu" id="dropdown-menu">
+          <a href="landing.html">Home</a>
+          <a href="#">Shop</a>
+          <a href="view_delivery.html">Delivery</a>
+          <a href="quiksell.html">QuikSell</a>
+      </div>
+  </header>
+
+    <section class="product">
+      <div class="middle-text">
+        <h2>Electronics <span>Collection</span></h2>
+      </div>
+      <div class="product-content"></div>
+    </section>
+
+    <footer>
+      <div class="end-text">
+        <p>© 2025 All Rights Reserved by UniTrade</p>
+      </div>
+    </footer>
+
+    <!-- Set category via URL query string for shop.js -->
+    <script>
+      history.replaceState(null, "", "?category=electronics");
+    </script>
+    <script src="shop.js"></script>
+  </body>
+</html>

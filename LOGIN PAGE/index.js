@@ -7,6 +7,8 @@ import * as argon2 from "argon2";
 import multer from "multer";
 import path from "path";
 import cors from "cors";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 //This is accessing the databse using db connect
 const db = new pg.Client({
@@ -82,7 +84,7 @@ app.get("/get-all-users", async (req, res) => {
 
 //endpoint to display login page when the page is loaded
 app.get("/", (req, res) => {
-  res.sendFile(__dirname + "/login2.html");
+  res.sendFile(__dirname + "/login.html");
 });
 
 //endpoint to send the register page when the page is loaded
@@ -238,6 +240,8 @@ const upload = multer({ storage: storage });
 
 //endpoint that is called and then uploads the image to the file
 app.post("/quiksell_upload", upload.single("image"), async (req, res) => {
+  // console.log(req.body);
+  console.log("This is it");
   const { pName, description, price, userName, email, phoneNumber } = req.body;
   const timestamp = new Date(); // Get the current timestamp
   console.log(req.file);
@@ -631,5 +635,254 @@ app.delete("/delete-delivery", async (req, res) => {
 app.listen(port, () => {
   console.log("Server is running on port " + port);
 });
+
+//DEREK's Module
+app.post("/vendor-login", async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const result = await db.query("SELECT * FROM vendors WHERE email = $1", [
+      email,
+    ]);
+    const vendor = result.rows[0];
+
+    if (!vendor || !(await bcrypt.compare(password, vendor.password))) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const token = jwt.sign({ id: vendor.id }, "your_jwt_secret", {
+      expiresIn: "1h",
+    });
+    res.json({ message: "Login successful", token, vendor });
+  } catch (err) {
+    console.error("Login Error:", err);
+    res.status(500).json({ error: "Login failed" });
+  }
+});
+
+app.post("/vendor-registration", async (req, res) => {
+  const { name, email, password, phone } = req.body;
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const result = await db.query(
+      "INSERT INTO vendors (name, email, password, phone) VALUES ($1, $2, $3, $4) RETURNING *",
+      [name, email, hashedPassword, phone]
+    );
+    res.status(201).json({
+      message: "Vendor registered successfully",
+      vendor: result.rows[0],
+    });
+  } catch (err) {
+    console.error("Registration Error:", err);
+    res.status(500).json({ error: "Vendor registration failed" });
+  }
+});
+
+app.post("/vendor-profile", async (req, res) => {
+  console.log("was i Called");
+  const { vendor } = req.body;
+
+  try {
+    const result = await db.query(
+      `
+          SELECT id, name, email, phone, store_name, store_description, profile_picture 
+          FROM vendors 
+          WHERE id = $1
+        `,
+      [vendor]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Profile Fetch Error:", err);
+    res.status(500).json({ error: "Failed to fetch profile" });
+  }
+});
+
+app.post("/upload-products", upload.single("image"), async (req, res) => {
+  // console.log("📥 Incoming Data:", req.body);
+  console.log(req.body);
+
+  try {
+    const currentDB = await db.query("SELECT current_database();");
+    console.log("🗔️ Connected to DB:", currentDB.rows[0].current_database);
+  } catch (err) {
+    console.error("❌ Failed to check current DB:", err);
+  }
+
+  let { vendor_id, name, price, description, quantity, category, condition } =
+    req.body;
+  const image = req.file ? req.file.filename : null;
+
+  // ✅ Normalize category (capitalize first letter, rest lowercase)
+  if (category) {
+    category =
+      category.charAt(0).toUpperCase() + category.slice(1).toLowerCase();
+  }
+
+  console.log(`Captured => Category: ${category}, Condition: ${condition}`);
+
+  try {
+    const query = `
+          INSERT INTO products (vendor_id, name, price, description, quantity, category, condition, image)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+          RETURNING *
+      `;
+    const values = [
+      vendor_id,
+      name,
+      price,
+      description,
+      quantity,
+      category,
+      condition,
+      image,
+    ];
+
+    console.log("🚀 Query Values:", values);
+
+    const result = await db.query(query, values);
+
+    console.log("✅ Saved Product:", result.rows[0]);
+
+    res.status(201).json({
+      message: "Product added successfully!",
+      product: result.rows[0],
+    });
+  } catch (err) {
+    console.error("❌ ERROR:", err);
+    res.status(500).json({ error: "Failed to add product" });
+  }
+});
+
+app.post("/get-vendor-products", async (req, res) => {
+  const { vendor_id } = req.body;
+  try {
+    const result = await db.query(
+      "SELECT * FROM products WHERE vendor_id = $1",
+      [vendor_id]
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: "Failed to fetch products" });
+  }
+});
+
+app.delete("/delete-product", async (req, res) => {
+  const { id } = req.body;
+
+  try {
+    const result = await db.query(
+      "DELETE FROM products WHERE id = $1 RETURNING *",
+      [id]
+    );
+
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Product not found." });
+    }
+
+    res.json({
+      message: "Product deleted successfully!",
+      deletedProduct: result.rows[0],
+    });
+  } catch (err) {
+    console.error("❌ Delete Error:", err);
+    res.status(500).json({ error: "Failed to delete product" });
+  }
+});
+
+app.post("/category-products", async (req, res) => {
+  console.log("category endpoint was called");
+  const { category } = req.body;
+
+  try {
+    console.log("🧪 Category param:", category); // Log the incoming param
+
+    const result = await db.query(
+      "SELECT * FROM products WHERE LOWER(category) = LOWER($1)",
+      [category]
+    );
+
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Error fetching category products:", err);
+    res.status(500).json({ error: "Failed to load category products" });
+  }
+});
+
+app.post("/description", async (req, res) => {
+  const { product_Id } = req.body;
+
+  try {
+    const result = await db.query(
+      `SELECT 
+            products.*, 
+            vendors.name AS vendor_name, 
+            vendors.phone AS vendor_phone
+        FROM products
+        JOIN vendors ON products.vendor_id = vendors.id
+        WHERE products.id = $1`,
+      [product_Id]
+    );
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("❌ Error fetching product description:", err);
+    res.status(500).json({ error: "Failed to load description" });
+  }
+});
+
+// ✅ Get Featured Products (for Landing Page)
+app.get("/featured-products", async (req, res) => {
+  try {
+    const result = await db.query(
+      "SELECT * FROM products ORDER BY created_at DESC LIMIT 6"
+    );
+    res.json(result.rows);
+  } catch (err) {
+    console.error("❌ Error fetching featured products:", err);
+    res.status(500).json({ error: "Failed to load featured products" });
+  }
+});
+
+app.post("/vendorprofile", async (req, res) => {
+  console.log("I returned the frontend data");
+  const { id } = req.body;
+
+  try {
+    const result = await db.query(
+      `
+          SELECT id, name, email, phone, store_name, store_description, profile_picture 
+          FROM vendors 
+          WHERE id = $1
+        `,
+      [id]
+    );
+
+    res.json(result.rows[0]);
+  } catch (err) {
+    console.error("Profile Fetch Error:", err);
+    res.status(500).json({ error: "Failed to fetch profile" });
+  }
+});
+
+// app.put("/updatevendorprofile", async (req, res) => {
+//   const { id } = req.params;
+//   const { storeName, storeDescription } = req.body;
+//   // const { name, email, phone } = req.body;
+
+//   try {
+//     const result = await db.query(
+//       "UPDATE vendors SET store_name = $1, store_description = $2 WHERE id = $3 RETURNING *",
+//       [storeName, storeDescription, id]
+//     );
+
+//     res.json({ message: "Profile updated", vendor: result.rows[0] });
+//   } catch (err) {
+//     console.error("Profile Update Error:", err.message); // ✅ Leave this for debugging
+//     res.status(500).json({ error: "Failed to update profile" });
+//   }
+// });
 
 db.end;

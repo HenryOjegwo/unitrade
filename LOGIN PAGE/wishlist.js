@@ -106,54 +106,54 @@ setInterval(() => {
   });
 }, 1000);
 
-const getDescription = async (pId) => {
-  console.log("Product ID:", pId);
-  const response = await fetch("/get-description", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      productId: pId,
-    }),
-  });
-  const data = await response.json();
+// const getDescription = async (pId) => {
+//   console.log("Product ID:", pId);
+//   const response = await fetch("/get-description", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       productId: pId,
+//     }),
+//   });
+//   const data = await response.json();
 
-  if (!response.ok) {
-    console.error("Error fetching product description:", data);
-    return;
-  }
-  const productDescriptionContainer = document.getElementById("description");
-  productDescriptionContainer.innerHTML = ""; // Clear existing content
+//   if (!response.ok) {
+//     console.error("Error fetching product description:", data);
+//     return;
+//   }
+//   const productDescriptionContainer = document.getElementById("description");
+//   productDescriptionContainer.innerHTML = ""; // Clear existing content
 
-  const descriptionCard = document.createElement("div");
-  descriptionCard.classList.add("description-card");
-  console.log(data.description);
+//   const descriptionCard = document.createElement("div");
+//   descriptionCard.classList.add("description-card");
+//   console.log(data.description);
 
-  const formattedPrice = Number(data.price).toLocaleString();
-  descriptionCard.innerHTML = `
+//   const formattedPrice = Number(data.price).toLocaleString();
+//   descriptionCard.innerHTML = `
 
-             <div class="home-image">
-                <img src="${data.image}" alt="${
-    data.name
-  }" class="product-image"/>
-            </div>
+//              <div class="home-image">
+//                 <img src="${data.image}" alt="${
+//     data.name
+//   }" class="product-image"/>
+//             </div>
 
-            <div class="home-text">
-                <h4>${data.name}</h4><br>
-                <h4>₦${formattedPrice}</h4><br>
-                <h4>Time Left: <span class="countdown" data-createdat="${
-                  data.createdat
-                }">${calculateCountdown(data.createdat)}</span></h4><br>
-                <h4>PRODUCT DESCRIPTION: ${data.description}</h4><br>
-                <h4>VENDOR NAME: ${data.user_name}</h4><br>
-                <h4>VENDOR NUMBER:${data.phonenumber}</h4><br>
-            </div>
+//             <div class="home-text">
+//                 <h4>${data.name}</h4><br>
+//                 <h4>₦${formattedPrice}</h4><br>
+//                 <h4>Time Left: <span class="countdown" data-createdat="${
+//                   data.createdat
+//                 }">${calculateCountdown(data.createdat)}</span></h4><br>
+//                 <h4>PRODUCT DESCRIPTION: ${data.description}</h4><br>
+//                 <h4>VENDOR NAME: ${data.user_name}</h4><br>
+//                 <h4>VENDOR NUMBER:${data.phonenumber}</h4><br>
+//             </div>
 
-        `;
-  productDescriptionContainer.appendChild(descriptionCard);
-  console.log("Did I get here?");
-};
+//         `;
+//   productDescriptionContainer.appendChild(descriptionCard);
+//   console.log("Did I get here?");
+// };
 
 //This function is called when the heart icon is clicked
 //It sends a post request to the server to toggle the wishlist status of the product
@@ -179,24 +179,24 @@ window.addEventListener("scroll", function () {
   header.classList.toggle("sticky", this.window.scrollY > 0);
 });
 
-// //Dropdown functionality
-// // Prevent default behavior of dropdown menu click
-// const dropdownIcon = document.getElementById("dropdown-icon");
-// const dropdownMenu = document.getElementById("dropdown-menu");
+//Dropdown functionality
+// Prevent default behavior of dropdown menu click
+const dropdownIcon = document.getElementById("dropdown-icon");
+const dropdownMenu = document.getElementById("dropdown-menu");
 
-// dropdownIcon.addEventListener("click", (event) => {
-//   event.preventDefault(); // Prevent the page from scrolling to the top
-//   dropdownMenu.classList.toggle("show"); // Toggle visibility
-// });
+dropdownIcon.addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the page from scrolling to the top
+  dropdownMenu.classList.toggle("show"); // Toggle visibility
+});
 
-// // Optional: Close the dropdown menu if clicked outside
-// document.addEventListener("click", (event) => {
-//   if (
-//     !dropdownIcon.contains(event.target) &&
-//     !dropdownMenu.contains(event.target)
-//   ) {
-//     dropdownMenu.classList.remove("show");
-//   }
-// });
+// Optional: Close the dropdown menu if clicked outside
+document.addEventListener("click", (event) => {
+  if (
+    !dropdownIcon.contains(event.target) &&
+    !dropdownMenu.contains(event.target)
+  ) {
+    dropdownMenu.classList.remove("show");
+  }
+});
 
 document.addEventListener("DOMContentLoaded", getWishList);

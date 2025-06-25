@@ -36,6 +36,7 @@ const addProduct = async (ev) => {
   formData.append("userName", payload.userName);
   formData.append("email", payload.email);
   formData.append("phoneNumber", payload.phoneNumber);
+  console.log(formData);
 
   const response = await fetch("/quiksell_upload", {
     method: "POST",
@@ -56,26 +57,6 @@ const addProduct = async (ev) => {
   }
   alert(data.message);
 };
-
-//Dropdown functionality
-// Prevent default behavior of dropdown menu click
-const dropdownIcon = document.getElementById("dropdown-icon");
-const dropdownMenu = document.getElementById("dropdown-menu");
-
-dropdownIcon.addEventListener("click", (event) => {
-  event.preventDefault(); // Prevent the page from scrolling to the top
-  dropdownMenu.classList.toggle("show"); // Toggle visibility
-});
-
-// Optional: Close the dropdown menu if clicked outside
-document.addEventListener("click", (event) => {
-  if (
-    !dropdownIcon.contains(event.target) &&
-    !dropdownMenu.contains(event.target)
-  ) {
-    dropdownMenu.classList.remove("show");
-  }
-});
 
 // Ensure only one event listener is attached to the form
 const productForm = document.getElementById("product-form");
